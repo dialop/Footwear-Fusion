@@ -1,7 +1,7 @@
 --------------------- USERS (NAME, EMAIL AND PASSWORD) TABLE SEEDS ---------------------
 
 INSERT INTO users (name, email, password) 
-VALUES 
+VALUES
 ('Alice Rua', 'alice@huli.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.' ),
 ('Dave Valer', 'dave@ymail.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.' ),
 ('Kira Hure', 'kira@yeahoo.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.' ),
