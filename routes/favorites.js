@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const { markFavorite, getFavoritesForUser } = require('../db/markFavorites');  // Import the new function
+const { markFavorite, getFavoritesForUser } = require('../db/queries/markFavorite');  // Import the new function
 
 router.post('/mark', (req, res) => {
     const userId = req.body.userId; 
