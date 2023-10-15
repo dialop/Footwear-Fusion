@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All products</title>
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" />
+  <!-- <link rel="stylesheet" href="/styles/main.css" /> -->
+  <link rel="stylesheet" href="/styles/layout.css" />
+  <link rel="stylesheet" href="/styles/nav.css">
+  <link rel="stylesheet" href="/styles/products.css">
+
+  <!-- Font Awesome library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+
+  <script src="/vendor/jquery-3.0.0.js"></script>
+  <script defer src="/scripts/app.js"></script>
+</head>
+
+<body>
+  <header>
+    <%- include('partials/_header') %>
+  </header>
+
+  <div class="product-details">
+    <h2><%= productDetail.title %></h2>
+    <img src="<%= productDetail.photo_url %>" alt="">
+    <p>Model: <%= productDetail.model %></p>
+    <p>Description: <%= productDetail.description %></p>
+    <p>Size: <%= productDetail.size %></p>
+    <p>Color: <%= productDetail.color %></p>
+    <p>Price: $<%= productDetail.price %></p>
+  </div>
+
+
+  <!-- if (user is logged in)  -->
+  <!-- Diana Ichmoukhametov -->
+  <div>
+<i class="fa-regular fa-heart"></i>
+  </div>
+
+  <!-- If product belongs to user -->
+  <!-- Diana Ichmoukhametov -->
+  <div>    
+    <button>Mark as Sold</button>
+    <button>Delete</button>
+  </div>
+</body>

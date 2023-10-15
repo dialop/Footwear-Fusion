@@ -4,8 +4,6 @@ require('dotenv').config();
 // Dependencies
 const express = require('express');
 const morgan = require('morgan');
-const bcrypt = require('bcrypt');
-const cookieSession = require('cookie-session');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -26,6 +24,14 @@ app.use(
     isSass: false, // false => scss, true => sass
   })
 );
+app.use(express.static('public'));
+
+// Diana Lopez- FAVORITES ROUTER
+const favoritesRouter = require('./routes/favorites'); 
+
+
+// Separated Routes for each Resource
+// Note: Feel free to replace the example routes below with your own
 
 // User data (consider moving this to a separate file)
 const users = [
@@ -53,15 +59,26 @@ const users = [
 const userApiRoutes = require('./routes/users-api');
 const widgetApiRoutes = require('./routes/widgets-api');
 const usersRoutes = require('./routes/users');
+const productsRoutes = require('./routes/products');
+
 
 app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
+app.use('/products', productsRoutes);
+app.use('/favorites', favoritesRouter);
+
+
+// Note: mount other resources here, using the same pattern above
 
 // Home page
 app.get('/', (req, res) => {
   res.render('index');
 });
+
+
+
+
 
 // Login GET route
 app.get('/login', (req, res) => {
