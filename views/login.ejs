@@ -2,8 +2,13 @@
 <html>
     <head>
         <title>Login</title>
+        <link rel="stylesheet" href="/styles/nav.css">
     </head>
     <body>
+        <header>
+            <%- include('partials/_header') %>
+          </header>
+
         <h1>Login</h1>
         <form method="POST" action="/login">
             <label for="username">Username:</label>
