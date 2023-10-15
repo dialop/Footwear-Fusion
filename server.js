@@ -8,6 +8,7 @@ const morgan = require('morgan');
 
 const PORT = process.env.PORT || 8080;
 const app = express();
+const app = express();
 
 app.set('view engine', 'ejs');
 
@@ -26,6 +27,10 @@ app.use(
 );
 app.use(express.static('public'));
 
+// Diana Lopez- FAVORITES ROUTER
+const favoritesRouter = require('./routes/favorites'); 
+
+
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 const userApiRoutes = require('./routes/users-api');
@@ -42,7 +47,8 @@ app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
 app.use('/products', productsRoutes);
-app.use('/productDetail', productDetails);
+app.use('/productDetail', productDetails)
+app.use('/favorites', favoritesRouter);
 app.use('/getAllProducts', getAllProducts);
 
 // Note: mount other resources here, using the same pattern above
@@ -56,6 +62,7 @@ app.get('/', (req, res) => {
 });
 
 
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
@@ -66,6 +73,8 @@ app.get('/products/:id', (req, res) => {
   console.log('it is details');
   res.render('productDetail')
 });
+
+
 
 
 // Abdiranman: Login GET route
