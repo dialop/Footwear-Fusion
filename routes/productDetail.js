@@ -10,5 +10,5 @@ const router  = express.Router();
 //   res.render('productDetail')
 // });
 
-
+// Testing Diana's route
 module.exports = router;
