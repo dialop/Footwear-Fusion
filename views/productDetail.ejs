@@ -13,6 +13,10 @@
   <link rel="stylesheet" href="/styles/nav.css">
   <link rel="stylesheet" href="/styles/products.css">
 
+  <!-- Font Awesome library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
 
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script defer src="/scripts/app.js"></script>
@@ -23,20 +27,26 @@
     <%- include('partials/_header') %>
   </header>
 
-  <h1>Product detail</h1>
-  <div class="product-card">
-    <a href=""><img src="https://cdn.shopify.com/s/files/1/0675/6836/9984/files/NKDQ5972-101NikeAirForce1LV82BlackSummitWhiteSesameBlackGS_29638_large.jpg?v=1693844428" alt="" ></a>
-    <p>Title</p>
-    <p>Product type</p>
-    <p>Description</p>
-    <p>Size</p>
-    <p>Color</p>
-    <p>Price</p>
-    <p>Review</p>
+  <div class="product-details">
+    <h2><%= productDetail.title %></h2>
+    <img src="<%= productDetail.photo_url %>" alt="">
+    <p>Model: <%= productDetail.model %></p>
+    <p>Description: <%= productDetail.description %></p>
+    <p>Size: <%= productDetail.size %></p>
+    <p>Color: <%= productDetail.color %></p>
+    <p>Price: $<%= productDetail.price %></p>
   </div>
 
-  <!-- if (user)  -->
+
+  <!-- if (user is logged in)  -->
+  <!-- Diana Ichmoukhametov -->
   <div>
+<i class="fa-regular fa-heart"></i>
+  </div>
+
+  <!-- If product belongs to user -->
+  <!-- Diana Ichmoukhametov -->
+  <div>    
     <button>Mark as Sold</button>
     <button>Delete</button>
   </div>
