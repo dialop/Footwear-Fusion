@@ -32,6 +32,7 @@ const userApiRoutes = require('./routes/users-api');
 const widgetApiRoutes = require('./routes/widgets-api');
 const usersRoutes = require('./routes/users');
 const productsRoutes = require('./routes/products')
+const productDetails = require('./routes/productDetail')
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -40,6 +41,7 @@ app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
 app.use('/products', productsRoutes)
+app.use('/productDetail', productDetails)
 // Note: mount other resources here, using the same pattern above
 
 // Home page
@@ -49,6 +51,14 @@ app.use('/products', productsRoutes)
 app.get('/', (req, res) => {
   res.render('index');
 });
+
+// Add route product detail. Will move to routes later.
+// Diana Ichmoukhametov
+app.get('/products/:id', (req, res) => {
+  console.log('it is details');
+  res.render('productDetail')
+});
+
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
