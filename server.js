@@ -40,8 +40,9 @@ const productDetails = require('./routes/productDetail')
 app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
-app.use('/products', productsRoutes)
+app.use('/products', productsRoutes);
 app.use('/productDetail', productDetails)
+
 // Note: mount other resources here, using the same pattern above
 
 // Home page
@@ -52,6 +53,11 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
+
+app.listen(PORT, () => {
+  console.log(`Example app listening on port ${PORT}`);
+});
+
 // Add route product detail. Will move to routes later.
 // Diana Ichmoukhametov
 app.get('/products/:id', (req, res) => {
@@ -60,6 +66,70 @@ app.get('/products/:id', (req, res) => {
 });
 
 
-app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`);
+// Abdiranman: Login GET route
+app.get('/login', (req, res) => {
+  res.render('login');
 });
+
+// Abdiranman: Login POST route
+app.post('/login', (req, res) => {
+  const { email, password } = req.body;
+  const user = getUserByEmail(email, users);
+  if (!user) {
+    res.status(403).send('User not found');
+  } else if (user.password !== password) {
+    res.status(403).send('Incorrect password');
+  } else {
+    req.session.user_id = user.id;
+    res.redirect('/'); // Redirect to the homepage after successful login
+  }
+});
+
+
+// Abdiranman: Register GET route
+app.get('/register', (req, res) => {
+  res.render('register');
+});
+
+// Abdiranman: Register POST route
+app.post('/register', (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    res.status(400).send('Email or password cannot be empty');
+  } else if (getUserByEmail(email, users)) {
+    res.status(400).send('Email already exists');
+  } else {
+    const id = generateRandomString();
+    const hashedPassword = bcrypt.hashSync(password, 10); // Hash the password
+    const newUser = {
+      id,
+      email,
+      password: hashedPassword, // Store the hashed password in the database
+    };
+    users[id] = newUser;
+    req.session.user_id = id;
+    res.redirect('/login'); // Redirect to the login page after successful registration
+  }
+});
+
+
+// Abdiranman: Logout POST route
+app.post('/logout', (req, res) => {
+  req.session = null;
+  res.redirect('/');
+});
+
+// Abdiranman: generateRandomString helper function
+const generateRandomString = function() {
+  return Math.random().toString(36).substring(2, 8);
+};
+
+// Abdiranman: getUserByEmail helper fucntion
+const getUserByEmail = function(email, database) {
+  for (const user in database) {
+    if (database[user].email === email) {
+      return database[user];
+    }
+  }
+  return false;
+};
