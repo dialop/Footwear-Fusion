@@ -1,23 +1,23 @@
-// load .env data into process.env
+// Load .env data into process.env
 require('dotenv').config();
 
-// Web server config
-const sassMiddleware = require('./lib/sass-middleware');
+// Dependencies
 const express = require('express');
 const morgan = require('morgan');
 const bcrypt = require('bcrypt');
 const cookieSession = require('cookie-session');
 
-const PORT = process.env.PORT || 8080;
 const app = express();
+const PORT = process.env.PORT || 8080;
 
+// Middleware
 app.set('view engine', 'ejs');
-
-// Load the logger first so all (static) HTTP requests are logged to STDOUT
-// 'dev' = Concise output colored by response status for development use.
-//         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
+
+// Configure SASS middleware
+const sassMiddleware = require('./lib/sass-middleware');
 app.use(
   '/styles',
   sassMiddleware({
@@ -26,100 +26,102 @@ app.use(
     isSass: false, // false => scss, true => sass
   })
 );
-app.use(express.static('public'));
 
-// Separated Routes for each Resource
-// Note: Feel free to replace the example routes below with your own
+// User data (consider moving this to a separate file)
+const users = [
+  {
+    name: 'John Doe',
+    email: 'johndoe@example.com',
+    password: 'password123',
+    isAdmin: false,
+  },
+  {
+    name: 'Jane Doe',
+    email: 'janedoe@example.com',
+    password: 'password456',
+    isAdmin: true,
+  },
+  {
+    name: 'Bob Smith',
+    email: 'bobsmith@example.com',
+    password: 'password789',
+    isAdmin: false,
+  },
+];
+
+// Routes
 const userApiRoutes = require('./routes/users-api');
 const widgetApiRoutes = require('./routes/widgets-api');
 const usersRoutes = require('./routes/users');
 
-// Mount all resource routes
-// Note: Feel free to replace the example routes below with your own
-// Note: Endpoints that return data (eg. JSON) usually start with `/api`
 app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
-// Note: mount other resources here, using the same pattern above
 
 // Home page
-// Warning: avoid creating more routes in this file!
-// Separate them into separate routes files (see above).
-
 app.get('/', (req, res) => {
   res.render('index');
 });
 
-app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`);
-});
-
-
-// Abdiranman: Login GET route
+// Login GET route
 app.get('/login', (req, res) => {
   res.render('login');
 });
 
-// Abdiranman: Login POST route
+// Login POST route
 app.post('/login', (req, res) => {
   const { email, password } = req.body;
+  console.log('Email:', email); // Check if email is received
   const user = getUserByEmail(email, users);
+  console.log('User:', user); // Check the user found
   if (!user) {
-    res.status(403).send('User not found');
-  } else if (user.password !== password) {
+    res.status(403).send('User does not exist');
+  } else if (!bcrypt.compareSync(password, user.password)) {
     res.status(403).send('Incorrect password');
   } else {
     req.session.user_id = user.id;
-    res.redirect('/'); // Redirect to the homepage after successful login
+    res.redirect('/');
   }
 });
 
 
-// Abdiranman: Register GET route
+// Register GET route
 app.get('/register', (req, res) => {
   res.render('register');
 });
 
-// Abdiranman: Register POST route
+// Register POST route
 app.post('/register', (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    res.status(400).send('Email or password cannot be empty');
+  const { name, email, password } = req.body;
+  if (!name || !email || !password) {
+    res.status(400).send('Please fill out all fields');
   } else if (getUserByEmail(email, users)) {
-    res.status(400).send('Email already exists');
+    res.status(400).send('User already exists');
   } else {
     const id = generateRandomString();
-    const hashedPassword = bcrypt.hashSync(password, 10); // Hash the password
-    const newUser = {
-      id,
-      email,
-      password: hashedPassword, // Store the hashed password in the database
-    };
-    users[id] = newUser;
+    const user = { id, name, email, password };
+    users.push(user); // Append the new user to the array
     req.session.user_id = id;
-    res.redirect('/login'); // Redirect to the login page after successful registration
+    res.redirect('/'); // Redirect to the homepage after successful registration
   }
 });
 
-
-// Abdiranman: Logout POST route
+// Logout POST route
 app.post('/logout', (req, res) => {
   req.session = null;
   res.redirect('/');
 });
 
-// Abdiranman: generateRandomString helper function
+// Helper functions
 const generateRandomString = function() {
   return Math.random().toString(36).substring(2, 8);
 };
 
-// Abdiranman: getUserByEmail helper fucntion
-const getUserByEmail = function(email, database) {
-  for (const user in database) {
-    if (database[user].email === email) {
-      return database[user];
-    }
-  }
-  return false;
+const getUserByEmail = (email, users) => {
+  return users.find((user) => user.email === email) || null;
 };
 
+// Server
+app.listen(PORT, () => {
+  console.log(`App is listening on port ${PORT}`);
+});
