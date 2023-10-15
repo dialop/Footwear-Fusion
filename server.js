@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 // load .env data into process.env
 require('dotenv').config();
 
@@ -124,7 +124,7 @@ const getUserByEmail = function(email, database) {
   return false;
 };
 
-=======
+
 // load .env data into process.env
 require('dotenv').config();
 
@@ -159,6 +159,8 @@ const userApiRoutes = require('./routes/users-api');
 const widgetApiRoutes = require('./routes/widgets-api');
 const usersRoutes = require('./routes/users');
 const productsRoutes = require('./routes/products')
+const { markFavorite } = require('../db/queries/markFavorite');
+
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -167,6 +169,8 @@ app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
 app.use('/products', productsRoutes)
+app.use('/favorites', favoritesRoutes);
+
 // Note: mount other resources here, using the same pattern above
 
 // Home page
@@ -180,4 +184,3 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
->>>>>>> feature/all-products
