@@ -4,6 +4,8 @@ require('dotenv').config();
 // Dependencies
 const express = require('express');
 const morgan = require('morgan');
+const cookieSession = require("cookie-session")
+const bcrypt = require('bcrypt');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -25,6 +27,17 @@ app.use(
   })
 );
 app.use(express.static('public'));
+
+// 
+app.use(
+  cookieSession({
+    name: "session",
+    keys: [`key1`],
+
+    // Cookie Options
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+  })
+);
 
 // Diana Lopez- FAVORITES ROUTER
 const favoritesRouter = require('./routes/favorites'); 
@@ -86,18 +99,17 @@ app.get('/login', (req, res) => {
 });
 
 // Login POST route
+// Login POST route
 app.post('/login', (req, res) => {
   const { email, password } = req.body;
-  console.log('Email:', email); // Check if email is received
   const user = getUserByEmail(email, users);
-  console.log('User:', user); // Check the user found
   if (!user) {
-    res.status(403).send('User does not exist');
+    res.status(401).send('Invalid email or password');
   } else if (!bcrypt.compareSync(password, user.password)) {
-    res.status(403).send('Incorrect password');
+    res.status(401).send('Invalid email or password');
   } else {
     req.session.user_id = user.id;
-    res.redirect('/');
+    res.redirect('/products');
   }
 });
 
