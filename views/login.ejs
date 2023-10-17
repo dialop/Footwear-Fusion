@@ -1,26 +1,23 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Login</title>
 
-    </head>
-    <body>
-        <header>
-            <%- include('partials/_header') %>
-          </header>
+<head>
+    <title>Login</title>
+</head>
 
-        <h1>Login</h1>
-        <form method="POST" action="/login">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username"><br>
+<body>
+    <header>
+        <%- include('partials/_header') %>
+        <link rel="stylesheet" href="/styles/loginStyle.css">
+        <link rel="stylesheet" href="/styles/nav.css">
+    </header>
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password"><br>
+    <h1>Sign In</h1>
+    <form method="POST" action="/login">
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+    </form>
+</body>
 
-            <input type="submit" value="Login">
-        </form>
-    </body>
 </html>
-
-<link rel="stylesheet" href="/styles/loginStyle.css">
-<link rel="stylesheet" href="/styles/nav.css">

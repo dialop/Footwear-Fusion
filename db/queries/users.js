@@ -16,4 +16,17 @@ const getUsers = async() => {
   }
 };
 
-module.exports = { getUsers };
+const getUserByEmail = (email) => {
+  return db.query('SELECT * FROM users WHERE email = $1;', [email])
+      .then((result) => {
+      if (result.rows.length === 0) {
+          return null;
+      }
+      return result.rows[0];
+      })
+      .catch((error) => {
+      throw new Error(`Failed to fetch user with email ${email}: ${error.message}`);
+      });
+  };
+
+module.exports = { getUsers, getUserByEmail };

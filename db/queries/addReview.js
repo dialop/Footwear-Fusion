@@ -15,7 +15,7 @@ const addReview = async(reviewDetails) => {
   const { user_id, product_id, content } = reviewDetails;
   try {
     const result = await db.query(
-      'INSERT INTO product_reviews (user_id, product_id, content) VALUES ($1, $2, $3) RETURNING *;',
+      'INSERT INTO reviews (user_id, product_id, content) VALUES ($1, $2, $3) RETURNING *;',
       [user_id, product_id, content]
     );
     return result.rows[0];

@@ -4,8 +4,6 @@ require('dotenv').config();
 // Dependencies
 const express = require('express');
 const morgan = require('morgan');
-const cookieSession = require("cookie-session")
-const bcrypt = require('bcrypt');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -28,51 +26,19 @@ app.use(
 );
 app.use(express.static('public'));
 
-// 
-app.use(
-  cookieSession({
-    name: "session",
-    keys: [`key1`],
-
-    // Cookie Options
-    maxAge: 24 * 60 * 60 * 1000, // 24 hours
-  })
-);
-
-// Diana Lopez- FAVORITES ROUTER
-const favoritesRouter = require('./routes/favorites'); 
-
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 
-// User data (consider moving this to a separate file)
-const users = [
-  {
-    name: 'John Doe',
-    email: 'johndoe@example.com',
-    password: 'password123',
-    isAdmin: false,
-  },
-  {
-    name: 'Jane Doe',
-    email: 'janedoe@example.com',
-    password: 'password456',
-    isAdmin: true,
-  },
-  {
-    name: 'Bob Smith',
-    email: 'bobsmith@example.com',
-    password: 'password789',
-    isAdmin: false,
-  },
-];
+
 
 // Routes
 const userApiRoutes = require('./routes/users-api');
 const widgetApiRoutes = require('./routes/widgets-api');
 const usersRoutes = require('./routes/users');
 const productsRoutes = require('./routes/products');
+const loginRouter = require('./routes/login');
+const favoritesRouter = require('./routes/favorites');
 
 
 app.use('/api/users', userApiRoutes);
@@ -80,7 +46,7 @@ app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
 app.use('/products', productsRoutes);
 app.use('/favorites', favoritesRouter);
-
+app.use('/login', loginRouter);
 
 // Note: mount other resources here, using the same pattern above
 
@@ -88,31 +54,6 @@ app.use('/favorites', favoritesRouter);
 app.get('/', (req, res) => {
   res.render('index');
 });
-
-
-
-
-
-// Login GET route
-app.get('/login', (req, res) => {
-  res.render('login');
-});
-
-// Login POST route
-// Login POST route
-app.post('/login', (req, res) => {
-  const { email, password } = req.body;
-  const user = getUserByEmail(email, users);
-  if (!user) {
-    res.status(401).send('Invalid email or password');
-  } else if (!bcrypt.compareSync(password, user.password)) {
-    res.status(401).send('Invalid email or password');
-  } else {
-    req.session.user_id = user.id;
-    res.redirect('/products');
-  }
-});
-
 
 // Register GET route
 app.get('/register', (req, res) => {
@@ -141,14 +82,7 @@ app.post('/logout', (req, res) => {
   res.redirect('/');
 });
 
-// Helper functions
-const generateRandomString = function() {
-  return Math.random().toString(36).substring(2, 8);
-};
 
-const getUserByEmail = (email, users) => {
-  return users.find((user) => user.email === email) || null;
-};
 
 // Server
 app.listen(PORT, () => {
