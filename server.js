@@ -76,6 +76,7 @@ const productsRoutes = require('./routes/products');
 const myProductsRoutes = require('./routes/myProducts');
 
 
+
 app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
@@ -84,12 +85,15 @@ app.use('/favorites', favoritesRouter);
 app.use('/myProducts', myProductsRoutes);
 
 
+
 // Note: mount other resources here, using the same pattern above
 
 // Home page
 app.get('/', (req, res) => {
   res.render('index');
 });
+
+
 
 
 

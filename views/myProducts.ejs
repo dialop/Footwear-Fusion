@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="/styles/products.css">
 
 
+
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script defer src="/scripts/app.js"></script>
 </head>
@@ -24,12 +25,12 @@
 
   <h1>My Products</h1>
 
-<form action="">
-  <a href="">Add new product</a>
-  
-</form>
 
-<div id="all-products">
+  <a href="myProducts/new">Add new product</a>
+  
+
+
+<div class="products">
   <% products.forEach(product => { %>
     <div class="product-card">
       <a href="/products/<%= product.id %>">
@@ -37,6 +38,11 @@
       </a>
       <p><%= product.title %></p>
       <p>$<%= product.price %></p>
+      <div>    
+        <button>Mark as Sold</button>
+        <button>Edit</button>
+        <button>Delete</button>
+      </div>
     </div>
   <% }); %>
 

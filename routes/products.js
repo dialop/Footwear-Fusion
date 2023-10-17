@@ -8,6 +8,7 @@ const { getProductDetail } = require('../db/queries/getProductDetail'); // Impor
 //Ichmoukhametov
 
 router.get('/', (req, res) => {
+  console.log(req.query);
   getAllProducts()
   .then(products => {
     console.log('Products:', products);

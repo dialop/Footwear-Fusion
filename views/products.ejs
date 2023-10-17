@@ -26,26 +26,26 @@
   <h1>All products</h1>
 <div class="search-shoes">
   <h3>Search</h3>
-  <form>
+  <form >
     <div class="search-by-size">
       <label for="search-size">Size</label>
-      <input type="number" placeholder="Size" id="search-size">
+      <input type="number" placeholder="Size" id="search-size" name="size">
     </div>
 
     <div class="search-by-type">
       <label for="search-type">Product type</label>
-      <input type="text" placeholder="Product type" id="search-type">
+      <input type="text" placeholder="Product type" id="search-type" name="type">
     </div>
 
     <div class="search-by-color">
       <label for="search-color">Color</label>
-      <input type="text" placeholder="Color" id="search-color">
+      <input type="text" placeholder="Color" id="search-color" name="color">
     </div>
 
     <div class="search-by-price">
       <label for="search-price">Price, $</label>
-      <input type="number" placeholder="Minimum" id="search-minimum-price">
-      <input type="number" placeholder="Maximum" id="search-maximum-price">
+      <input type="number" placeholder="Minimum" id="search-minimum-price" name="min-price">
+      <input type="number" placeholder="Maximum" id="search-maximum-price" name="max-price">
     </div>
 
     <div>
@@ -63,7 +63,7 @@
 
 </div>
 
-<div id="all-products">
+<div class="products">
   <% products.forEach(product => { %>
     <div class="product-card">
       <a href="/products/<%= product.id %>">
