@@ -5,7 +5,7 @@ const db = require('../connection');
 
 const getFilteredProducts = (products, limit = 10) => {
   const queryParams = [];
-  
+
   // Base query string to fetch products
   let queryString = `
   SELECT products.*
@@ -18,13 +18,28 @@ const getFilteredProducts = (products, limit = 10) => {
   // Add filter for product title
   if (products.title) {
     queryParams.push(`%${products.title}%`);
-    queryString += ` AND title ILIKE $${queryParams.length}`; // ILIKE provides case-sensitivity matching when filtering
+    queryString += ` AND title ILIKE $${queryParams.length}`;
   }
 
-  // Add filter for product price range
-  if (products.minimum_price && products.maximum_price) {
-    queryParams.push(products.minimum_price, products.maximum_price);
-    queryString += ` AND price BETWEEN $${queryParams.length - 1} AND $${queryParams.length}`;
+  // Add filter for product size
+  if (products.size) {
+    queryParams.push(products.size);
+    queryString += ` AND size = $${queryParams.length}`;
+  }
+
+  // Handle price filtering
+  if (products.minimumPrice || products.maximumPrice) {
+    if (products.minimumPrice) {
+      const minPrice = parseFloat(products.minimumPrice);
+      queryParams.push(minPrice);
+      queryString += ` AND price >= $${queryParams.length}`;
+    }
+
+    if (products.maximumPrice) {
+      const maxPrice = parseFloat(products.maximumPrice);
+      queryParams.push(maxPrice);
+      queryString += ` AND price <= $${queryParams.length}`;
+    }
   }
 
   // Group the results by product ID
@@ -53,5 +68,6 @@ const getFilteredProducts = (products, limit = 10) => {
       throw err;
     });
 };
+
 
 module.exports = { getFilteredProducts };
