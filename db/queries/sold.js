@@ -2,11 +2,6 @@
 
 const db = require('../connection');
 
-/**
- * @param {number} productId - ID of the product to mark as sold
- * @returns {Promise<Object>} Updated product data
- * @throws {Error} If error occurs
- */
 
 const markAsSold = async(productId) => {
   try {

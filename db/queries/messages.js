@@ -1,41 +1,32 @@
-// ----  HANDLES QUERY TO SEND AND RETRIEVE MESSAGES  ----//
+// ----  HANDLE FUNCTIONS TO SEND AND RETRIEVE MESSAGES  ----//
 
 const db = require('../connection');
 
-/**
- * Sends a new message
- *
- * @param {Object} messageDetails - Details of the message being sent
- * @param {number|string} messageDetails.sender_id - ID of the sender
- * @param {number|string} messageDetails.receiver_id - ID of the receiver
- * @param {string} messageDetails.content - Content of message
- * @returns {Promise<Object>} Message data sent
- * @throws {Error} If error sending message
- */
+// Sends a message and returns the sent message details
 const sendMessage = async(messageDetails) => {
-  const { sender_id, receiver_id, content } = messageDetails;
+  const { sender_id, receiver_id, product_id, message } = messageDetails;
+  
   try {
-    const result = await db.query('INSERT INTO messages (sender_id, receiver_id, content) VALUES ($1, $2, $3) RETURNING *;', [sender_id, receiver_id, content]);
-    return result.rows[0];
+      const result = await db.query(
+          'INSERT INTO messages (sender_id, receiver_id, product_id, message, date_sent) VALUES ($1, $2, $3, $4, CURRENT_TIMESTAMP) RETURNING *;',
+          [sender_id, receiver_id, product_id, message]
+      );
+      
+      return result.rows[0];
   } catch (error) {
-    throw new Error(`Failed to send message from user ${sender_id} to user ${receiver_id}: ${error.message}`);
+      throw new Error(`Failed to send message: ${error.message}`);
   }
 };
 
-/**
- * Retrieves all messages for a specific user
- *
- * @param {number|string} userId - ID of user whose messages to be retrieved
- * @returns {Promise<Array>} List of messages for user
- * @throws {Error} If error retrieving the messages
- */
-const getMessagesForUser = async(userId) => {
+
+//Retrieves all messages sorted by the date they were sent (latest first)
+const getAllMessages = async() => {
   try {
-    const result = await db.query('SELECT * FROM messages WHERE sender_id = $1 OR receiver_id = $1 ORDER BY created_at DESC;', [userId]);
+    const result = await db.query('SELECT * FROM messages ORDER BY date_sent DESC;');
     return result.rows;
   } catch (error) {
-    throw new Error(`Failed to retrieve messages for user with ID ${userId}: ${error.message}`);
+    throw new Error(`Failed to retrieve messages: ${error.message}`);
   }
 };
 
-module.exports = { sendMessage, getMessagesForUser };
+module.exports = { sendMessage, getAllMessages };
