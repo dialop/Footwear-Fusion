@@ -74,6 +74,7 @@ const widgetApiRoutes = require('./routes/widgets-api');
 const usersRoutes = require('./routes/users');
 const productsRoutes = require('./routes/products');
 const myProductsRoutes = require('./routes/myProducts');
+const { getFilteredProducts } = require('./db/queries/filterProducts');
 
 
 
@@ -84,6 +85,21 @@ app.use('/products', productsRoutes);
 app.use('/favorites', favoritesRouter);
 app.use('/myProducts', myProductsRoutes);
 
+
+// -- GET ROUTE TO ACCESS FILTERED PRODUCTS -- //
+app.get('/filterProducts', (req, res) => {
+  console.log("Accessed /filterProducts"); 
+  const products = req.query;
+
+  getFilteredProducts(products)  //queries the products 
+      .then(data => {
+          res.json(data);
+      })
+      .catch(err => {
+          console.error('Error fetching filtered products:', err);
+          res.status(500).send('Internal Server Error');
+      });
+});
 
 
 // Note: mount other resources here, using the same pattern above

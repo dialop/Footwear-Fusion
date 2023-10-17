@@ -1,43 +1,45 @@
 
+// Express Router setup
 const express = require('express');
-const router  = express.Router();
-const { getAllProducts } = require('../db/queries/getAllProducts'); // Import the function
-const { getProductDetail } = require('../db/queries/getProductDetail'); // Import the function
+const router = express.Router();
 
-// ----  ROUTE TO FETCH ALL PRODUCTS ---- //
-//Ichmoukhametov
+// Database queries
+const { getFilteredProducts } = require('../db/queries/filterProducts');
+const { getProductDetail } = require('../db/queries/getProductDetail');
 
+
+
+
+// ----  GET ROUTE TO FETCH ALL PRODUCTS ---- //
 router.get('/', (req, res) => {
-  console.log(req.query);
-  getAllProducts()
-  .then(products => {
-    console.log('Products:', products);
-    res.render('products', { products });
-    })
-    .catch((e) => {
-      console.error(e);
-      res.send(e);
-    });
+    // Get products based on the parsed query string from the URL
+    getFilteredProducts(req.query)
+        .then(products => {
+            // Render the results using Express and EJS template
+            res.render('products', { products });
+        })
+        .catch(err => {
+            console.error('Error fetching filtered products:', err);
+            res.status(500).send('Internal Server Error');
+        });
 });
 
-// ----  ROUTE TO FETCH PRODUCT DETAIL ---- //
-//Ichmoukhametov
+// ----  ROUTE TO FETCH PRODUCT DETAILS ---- //
 
 router.get('/:id', (req, res) => {
-  const productId = req.params.id;
-  getProductDetail(productId)
-    .then(product => {
-      const templateVars = {
-        productDetail: product 
-      };
-      res.render('productDetail', templateVars);
-    })
-    .catch((e) => {
-      console.error(e);
-      res.send(e);
-    });
+    // Extract product ID from the request parameters
+    const productId = req.params.id;
+
+    getProductDetail(productId)
+        .then(product => {
+            // Render the product detail using Express and EJS template
+            res.render('productDetail', { productDetail: product });
+        })
+        .catch(e => {
+            console.error(e);
+            res.send(e);
+        });
 });
 
-
-
+// Export the router for use in the main application
 module.exports = router;
