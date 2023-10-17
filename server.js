@@ -51,7 +51,8 @@ app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
 app.use('/products', productsRoutes);
 app.use('/favorites', favoritesRouter);
-app.use('/login', loginRouter);app.use('/myProducts', myProductsRoutes);
+app.use('/login', loginRouter);
+app.use('/myProducts', myProductsRoutes);
 
 // -- GET ROUTE SEND MESSAGES -- //
 app.get('/messages', async (req, res) => {
@@ -96,32 +97,6 @@ app.get('/filterProducts', (req, res) => {
 // Home page
 app.get('/', (req, res) => {
   res.render('index');
-});
-
-
-
-
-
-
-
-// Login GET route
-app.get('/login', (req, res) => {
-  res.render('login');
-});
-
-// Login POST route
-// Login POST route
-app.post('/login', (req, res) => {
-  const { email, password } = req.body;
-  const user = getUserByEmail(email, users);
-  if (!user) {
-    res.status(401).send('Invalid email or password');
-  } else if (!bcrypt.compareSync(password, user.password)) {
-    res.status(401).send('Invalid email or password');
-  } else {
-    req.session.user_id = user.id;
-    res.redirect('/products');
-  }
 });
 
 
