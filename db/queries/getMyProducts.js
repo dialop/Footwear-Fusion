@@ -2,12 +2,6 @@
 
 const db = require('../connection');
 
-/**
- * @param {number|string} userId - ID of the user whose products are to be fetched
- * @returns {Promise<Array>} List of products owned by user
- * @throws {Error} If error fetching products
- */
-
 // Ichmoukhametov: Hard codded user ID
 const getMyProducts = async() => {
   try {
