@@ -8,7 +8,7 @@ const db = require('../connection');
  * @throws {Error} If error fetching products
  */
 
-                     // Ichmoukhametov: Hard codded user ID
+// Ichmoukhametov: Hard codded user ID
 const getMyProducts = async() => {
   try {
     const result = await db.query('SELECT * FROM products WHERE owner_id = 1;');
@@ -18,7 +18,7 @@ const getMyProducts = async() => {
   }
 };
 
-                             // Ichmoukhametov: Use this when login works
+// Ichmoukhametov: Use this when login works
 
 // const getMyProducts = async(userId) => {
 //   try {
