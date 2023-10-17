@@ -6,6 +6,7 @@ const router = express.Router();
 // Database queries
 const { getFilteredProducts } = require('../db/queries/filterProducts');
 const { getProductDetail } = require('../db/queries/getProductDetail');
+const { editProduct } = require('../db/queries/editProduct');
 
 
 
@@ -40,6 +41,42 @@ router.get('/:id', (req, res) => {
             res.send(e);
         });
 });
+
+
+// ----  ROUTE TO EDIT PRODUCT DETAILS ---- //
+router.post('/:id/edit', (req, res) => {
+    const productId = req.params.id;
+    const { title, model, description, size, color, price, photo_url } = req.body;
+
+    editProduct({ title, model, description, size, color, price, photo_url }, productId)
+    .then(product => {
+        // Render the product detail using Express and EJS template
+        res.json({ product })
+    })
+    .catch(e => {
+        console.error(e);
+        res.send(e);
+    });
+    res.redirect('/myProducts');
+})
+
+  
+
+// ----  ROUTE TO EDIT PRODUCT DETAILS ---- //
+router.get('/:id/edit', (req, res) => {
+    const productId = req.params.id;
+    getProductDetail(productId)
+        .then(product => {
+            console.log(product);
+            // Render the product detail using Express and EJS template
+            res.render('edit-product', { product });
+        })
+        .catch(e => {
+            console.error(e);
+            res.send(e);
+        });
+  });
+  
 
 // Export the router for use in the main application
 module.exports = router;

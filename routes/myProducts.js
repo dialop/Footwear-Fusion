@@ -7,6 +7,7 @@ const { addProduct  } = require('../db/queries/addProduct'); // Import the funct
 // ----  ROUTE TO FETCH USERS PRODUCTS ---- //
 //Ichmoukhametov
 
+
 router.get('/', (req, res) => {
   getMyProducts()
     .then(products => {
@@ -19,7 +20,7 @@ router.get('/', (req, res) => {
     });
 });
 
-
+// ----  ROUTE TO ADD NEW PRODUCT ---- //
 router.post('/new', (req, res) => {
   //This is just for testing, before we have login
   req.session.user_id = {id : 1};
@@ -38,10 +39,11 @@ router.post('/new', (req, res) => {
 });
 
 
-
+// ----  ROUTE TO DISPLAY ADD PRODUCT PAGE---- //
 router.get('/new', (req, res) => {
   res.render('add-product');
 });
+
 
 
 
