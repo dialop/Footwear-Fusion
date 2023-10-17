@@ -1,102 +1,99 @@
+<!--
+    Title: ALL PRODUCTS PAGE 
+    Description: Displays a list of all products with a filterable search feature
+-->
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>All products</title>
+    <!-- Meta Information -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
-  <link rel="stylesheet" href="/vendor/border-box.css" />
-  <!-- <link rel="stylesheet" href="/styles/main.css" /> -->
-  <link rel="stylesheet" href="/styles/layout.css" />
-  <link rel="stylesheet" href="/styles/nav.css">
-  <link rel="stylesheet" href="/styles/products.css">
+    <!-- Page Title -->
+    <title>All products</title>
 
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
+    <link rel="stylesheet" href="/vendor/border-box.css" />
+    <link rel="stylesheet" href="/styles/layout.css" />
+    <link rel="stylesheet" href="/styles/nav.css">
+    <link rel="stylesheet" href="/styles/products.css">
 
-  <script src="/vendor/jquery-3.0.0.js"></script>
-  <script defer src="/scripts/app.js"></script>
+    <!-- Scripts -->
+    <script src="/vendor/jquery-3.0.0.js"></script>
+    <script defer src="/scripts/app.js"></script>
 </head>
 
 <body>
-  <header>
-    <%- include('partials/_header') %>
-  </header>
+    <!-- Header Section -->
+    <header>
+        <!-- Including Header Partial -->
+        <%- include('partials/_header') %>
+    </header>
 
-  <h1>All products</h1>
-<div class="search-shoes">
-  <h3>Search</h3>
-  <form>
-    <div class="search-by-size">
-      <label for="search-size">Size</label>
-      <input type="number" placeholder="Size" id="search-size">
+    <!-- Main Title -->
+    <h1>All products</h1>
+
+    <!-- Filters Section -->
+    <div class="filter-shoes">
+        <h3>Search</h3>
+        <form method="GET" action="/products">
+            <!-- Search by Title -->
+            <div class="filter-by-title">
+                <label for="filter-title">Title:</label>
+                <input type="text" name="title" placeholder="Title" id="filter-title">
+            </div>
+
+            <!-- Filter by Size -->
+            <div class="filter-by-size">
+                <label for="filter-size">Size:</label>
+                <input type="number" name="size" id="filter-size">
+            </div>
+
+    
+            <!-- Search by Color 
+            <div class="filter-by-color">
+                <label for="filter-color">Color:</label>
+                <input type="text" name="color" placeholder="Color" id="filter-color">
+            </div>
+        -->
+
+            <!-- Search by Price Range -->
+            <div class="filter-by-price">
+                <label for="filter-minimum-price">Price $:</label>
+                <input type="number" name="minimumPrice" placeholder="Minimum" id="filter-minimum-price">
+                <input type="number" name="maximumPrice" placeholder="Maximum" id="filter-maximum-price">
+            </div>
+
+            <!-- Submit Button -->
+            <div>
+                <button class="filter-btn" type="submit">Search</button>
+            </div>
+        </form>
     </div>
 
-    <div class="search-by-type">
-      <label for="search-type">Product type</label>
-      <input type="text" placeholder="Product type" id="search-type">
+    <!-- Placeholder for Search Results -->
+    <div id="search-result">
+        <!-- Content will be populated upon search -->
     </div>
 
-    <div class="search-by-color">
-      <label for="search-color">Color</label>
-      <input type="text" placeholder="Color" id="search-color">
+    <!-- All Products Display Section -->
+    <div id="all-products">
+        <!-- Loop through and display each product -->
+        <% products.forEach(product => { %>
+        <div class="product-card">
+            <a href="/products/<%= product.id %>">
+                <img src="<%= product.photo_url %>" alt="<%= product.title %>">
+            </a>
+            <p><%= product.title %></p>
+            <p>$<%= product.price %></p>
+        </div>
+        <% }); %>
     </div>
 
-    <div class="search-by-price">
-      <label for="search-price">Price, $</label>
-      <input type="number" placeholder="Minimum" id="search-minimum-price">
-      <input type="number" placeholder="Maximum" id="search-maximum-price">
-    </div>
-
-    <div>
-      <button class="search-btn" type="submit">Search</button>
-    </div>
-  </form>
-</div>
-
-
-
-<!-- If  search button clicked, then show search result, hide all-products -->
-<!-- Diana Ichmoukhametov -->
-<div id="search-result">
-
-
-</div>
-
-<div id="all-products">
-  <% products.forEach(product => { %>
-    <div class="product-card">
-      <a href="/products/<%= product.id %>">
-        <img src="<%= product.photo_url %>" alt="<%= product.title %>">
-      </a>
-      <p><%= product.title %></p>
-      <p>$<%= product.price %></p>
-    </div>
-  <% }); %>
-</div>
-
-<!--  By  default all products shown-->
-<!-- Diana Ichmoukhametov -->
-<!-- <div id="all-products">
-
-  <div class="product-card">
-    <a href="/products/:id"><img src="https://cdn.shopify.com/s/files/1/0675/6836/9984/files/NKDQ5972-101NikeAirForce1LV82BlackSummitWhiteSesameBlackGS_29638_large.jpg?v=1693844428" alt="" ></a>
-    <p>Title</p>
-    <p>Price</p>
-  </div>
-
-  <div class="product-card">
-    <a href="/products/:id"><img src="https://cdn.shopify.com/s/files/1/0675/6836/9984/files/NKDQ5972-101NikeAirForce1LV82BlackSummitWhiteSesameBlackGS_29638_large.jpg?v=1693844428" alt=""></a>
-    <p>Title</p>
-    <p>Price</p>
-  </div>
-
-  <div class="product-card">
-    <a href="/products/:id"><img src="https://cdn.shopify.com/s/files/1/0675/6836/9984/files/NKDQ5972-101NikeAirForce1LV82BlackSummitWhiteSesameBlackGS_29638_large.jpg?v=1693844428" alt=""></a>
-    <p>Title</p>
-    <p>Price</p>
-  </div>
-
-</div> -->
 </body>
+
 </html>

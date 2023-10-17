@@ -39,6 +39,11 @@ const usersRoutes = require('./routes/users');
 const productsRoutes = require('./routes/products');
 const loginRouter = require('./routes/login');
 const favoritesRouter = require('./routes/favorites');
+const myProductsRoutes = require('./routes/myProducts');
+const { getFilteredProducts } = require('./db/queries/filterProducts');
+const { sendMessage, getAllMessages } = require('./db/queries/messages'); 
+
+
 
 
 app.use('/api/users', userApiRoutes);
@@ -46,7 +51,45 @@ app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
 app.use('/products', productsRoutes);
 app.use('/favorites', favoritesRouter);
-app.use('/login', loginRouter);
+app.use('/login', loginRouter);app.use('/myProducts', myProductsRoutes);
+
+// -- GET ROUTE SEND MESSAGES -- //
+app.get('/messages', async (req, res) => {
+  try {
+      const messages = await getAllMessages();
+      res.render('messages', { messages: messages });
+  } catch (error) {
+      res.status(500).send('Error retrieving messages');
+  }
+});
+
+app.post('/send-message', async (req, res) => {
+  const { sender_id, receiver_id, product_id, message } = req.body;
+
+  try {
+      await sendMessage({ sender_id, receiver_id, product_id, message });
+      res.redirect('/messages'); // Redirect back to the messages page.
+  } catch (error) {
+      res.status(500).send('Error sending message');
+  }
+});
+
+
+// -- GET ROUTE TO ACCESS FILTERED PRODUCTS -- //
+app.get('/filterProducts', (req, res) => {
+  console.log("Accessed /filterProducts"); 
+  const products = req.query;
+
+  getFilteredProducts(products)  //queries the products 
+      .then(data => {
+          res.json(data);
+      })
+      .catch(err => {
+          console.error('Error fetching filtered products:', err);
+          res.status(500).send('Internal Server Error');
+      });
+});
+
 
 // Note: mount other resources here, using the same pattern above
 
@@ -54,6 +97,33 @@ app.use('/login', loginRouter);
 app.get('/', (req, res) => {
   res.render('index');
 });
+
+
+
+
+
+
+
+// Login GET route
+app.get('/login', (req, res) => {
+  res.render('login');
+});
+
+// Login POST route
+// Login POST route
+app.post('/login', (req, res) => {
+  const { email, password } = req.body;
+  const user = getUserByEmail(email, users);
+  if (!user) {
+    res.status(401).send('Invalid email or password');
+  } else if (!bcrypt.compareSync(password, user.password)) {
+    res.status(401).send('Invalid email or password');
+  } else {
+    req.session.user_id = user.id;
+    res.redirect('/products');
+  }
+});
+
 
 // Register GET route
 app.get('/register', (req, res) => {

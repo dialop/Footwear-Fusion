@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit product</title>
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" />
+  <!-- <link rel="stylesheet" href="/styles/main.css" /> -->
+  <link rel="stylesheet" href="/styles/layout.css" />
+  <link rel="stylesheet" href="/styles/nav.css">
+  <link rel="stylesheet" href="/styles/products.css">
+
+  <!-- Font Awesome library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+
+  <script src="/vendor/jquery-3.0.0.js"></script>
+  <script defer src="/scripts/app.js"></script>
+</head>
+
+<body>
+  <header>
+    <%- include('partials/_header') %>
+  </header>
+
+  <h1>Edit Product</h1>
+  <div class="add-product">
+    <form action="/products/<%= product.id %>/edit" method="POST">
+    <div>
+      <label for="title">New Title</label>
+      <input type="text" name="title" value="<%= product.title %>" required>
+    </div>
+    <div>
+      <label for="model">New Model</label>
+      <input type="text" name="model" value="<%= product.model %>" required>
+    </div>
+    <div>
+      <label for="description">New Description</label>
+      <input type="text" name="description" value="<%= product.description %>" required>
+    </div>
+    <div>
+      <label for="size">New Size</label>
+      <input type="number" name="size" value="<%= product.size %>" required>
+    </div>
+    <div>
+      <label for="color">New Color</label>
+      <input type="text" name="color" value="<%= product.color %>" required>
+    </div>
+    <div>
+      <label for="price">New Price</label>
+      <input type="number" name="price" value="<%= product.price %>" required>
+    </div>
+    <div>
+      <label for="photo_url">New Photo_url</label>
+      <input type="text" name="photo_url" value="<%= product.photo_url %>" required>
+    </div>
+
+    <button type="submit">Save Changes</button>
+    </form>
+  </div>
+</body>
+
+</html>

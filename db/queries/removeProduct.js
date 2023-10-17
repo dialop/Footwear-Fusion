@@ -2,11 +2,6 @@
 
 const db = require('../connection');
 
-/**
- * @param {number|string} productId - Product id to be removed
- * @returns {Promise<Object>} Removed product data
- * @throws {Error} If product not found || error occurs during removal
- */
 
 const removeProduct = async(productId) => {
   try {

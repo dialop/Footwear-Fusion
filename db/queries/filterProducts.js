@@ -1,33 +1,73 @@
-// ---- HANDLES QUERY TO FILTER PRODUCTS ---- //
+
+// ---- HANDLE FUNCTIONS TO FILTER PRODUCTS ---- //
 
 const db = require('../connection');
 
-/**
- * @param {Object} criteria - Object containing filtering criteria
- * @returns {Promise<Array>} List of filtered products
- * @throws {Error} If error filtering the products
- */
+const getFilteredProducts = (products, limit = 10) => {
+  const queryParams = [];
 
-const filterProducts = async(criteria) => {
-  let query = 'SELECT * FROM products WHERE ';
-  let values = [];
-  let conditions = [];
+  // Base query string to fetch products
+  let queryString = `
+  SELECT products.*
+  -- , AVG(product_reviews.rating) as average_rating
+  FROM products
+  LEFT JOIN product_reviews ON products.id = product_id
+  WHERE 1 = 1
+  `;
+  
+  // Add filter for product title
+  if (products.title) {
+    queryParams.push(`%${products.title}%`);
+    queryString += ` AND title ILIKE $${queryParams.length}`;
+  }
 
-  for (let key in criteria) {
-    if (Object.hasOwnProperty.call(criteria, key)) {
-      conditions.push(`${key} = $${values.length + 1}`);
-      values.push(criteria[key]);
+  // Add filter for product size
+  if (products.size) {
+    queryParams.push(products.size);
+    queryString += ` AND size = $${queryParams.length}`;
+  }
+
+  // Handle price filtering
+  if (products.minimumPrice || products.maximumPrice) {
+    if (products.minimumPrice) {
+      const minPrice = parseFloat(products.minimumPrice);
+      queryParams.push(minPrice);
+      queryString += ` AND price >= $${queryParams.length}`;
+    }
+
+    if (products.maximumPrice) {
+      const maxPrice = parseFloat(products.maximumPrice);
+      queryParams.push(maxPrice);
+      queryString += ` AND price <= $${queryParams.length}`;
     }
   }
 
-  query += conditions.join(' AND ');
+  // Group the results by product ID
+  queryString += `
+    GROUP BY products.id
+  `;
 
-  try {
-    const result = await db.query(query, values);
-    return result.rows;
-  } catch (error) {
-    throw new Error(`Failed to filter products based on criteria ${JSON.stringify(criteria)}: ${error.message}`);
-  }
+  // Uncomment to filter by minimum rating
+  // if (products.minimum_rating) {
+  //   queryParams.push(products.minimum_rating);
+  //   queryString += ` HAVING AVG(product_reviews.rating) >= $${queryParams.length}`;
+  // }
+
+  // Add order and limit to the query
+  queryParams.push(limit);
+  queryString += `
+    ORDER BY price
+    LIMIT $${queryParams.length};
+  `;
+
+  // Execute the query and return the results
+  return db.query(queryString, queryParams)
+    .then(res => res.rows)
+    .catch(err => {
+      console.error("Error fetching filtered products:", err.message);
+      throw err;
+    });
 };
 
-module.exports = { filterProducts };
+
+module.exports = { getFilteredProducts };

@@ -2,15 +2,6 @@
 
 const db = require('../connection');
 
-/**
- * @param {Object} reviewDetails - Details of review added
- * @param {number|string} reviewDetails.user_id - ID of user adding review
- * @param {number|string} reviewDetails.product_id - ID of product being reviewed
- * @param {string} reviewDetails.content - Content of the review
- * @returns {Promise<Object>}  Added review data
- * @throws {Error} If error adding the review
- */
-
 const addReview = async(reviewDetails) => {
   const { user_id, product_id, content } = reviewDetails;
   try {
