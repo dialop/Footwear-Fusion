@@ -1,7 +1,7 @@
-// Database connection setup
-const db = require('../connection');
 
-// ---- HANDLES QUERY TO FILTER PRODUCTS ---- //
+// ---- HANDLE FUNCTIONS TO FILTER PRODUCTS ---- //
+
+const db = require('../connection');
 
 const getFilteredProducts = (products, limit = 10) => {
   const queryParams = [];

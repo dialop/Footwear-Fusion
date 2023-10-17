@@ -75,6 +75,8 @@ const usersRoutes = require('./routes/users');
 const productsRoutes = require('./routes/products');
 const myProductsRoutes = require('./routes/myProducts');
 const { getFilteredProducts } = require('./db/queries/filterProducts');
+const { sendMessage, getAllMessages } = require('./db/queries/messages'); 
+
 
 
 
@@ -84,6 +86,27 @@ app.use('/users', usersRoutes);
 app.use('/products', productsRoutes);
 app.use('/favorites', favoritesRouter);
 app.use('/myProducts', myProductsRoutes);
+
+// -- GET ROUTE SEND MESSAGES -- //
+app.get('/messages', async (req, res) => {
+  try {
+      const messages = await getAllMessages();
+      res.render('messages', { messages: messages });
+  } catch (error) {
+      res.status(500).send('Error retrieving messages');
+  }
+});
+
+app.post('/send-message', async (req, res) => {
+  const { sender_id, receiver_id, product_id, message } = req.body;
+
+  try {
+      await sendMessage({ sender_id, receiver_id, product_id, message });
+      res.redirect('/messages'); // Redirect back to the messages page.
+  } catch (error) {
+      res.status(500).send('Error sending message');
+  }
+});
 
 
 // -- GET ROUTE TO ACCESS FILTERED PRODUCTS -- //

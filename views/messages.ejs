@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Meta Information -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Page Title -->
+    <title>My Messages</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css">
+    <link rel="stylesheet" href="/vendor/border-box.css">
+    <link rel="stylesheet" href="/styles/layout.css">
+    <link rel="stylesheet" href="/styles/nav.css">
+    <link rel="stylesheet" href="/styles/products.css">
+
+    <!-- Scripts -->
+    <script src="/vendor/jquery-3.0.0.js"></script>
+    <script defer src="/scripts/app.js"></script>
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <!-- Including Header Partial -->
+        <%- include('partials/_header') %>
+    </header>
+
+    <!-- Main Content Section -->
+    <main>
+        <!-- Main Title -->
+        <h1>My Messages</h1>
+
+        <!-- Display All Messages -->
+        <section>
+            <h2>Messages</h2>
+            <ul>
+                <% messages.forEach(message => { %>
+                    <li>
+                        <strong>Sender:</strong> <%= message.sender_id %>
+                        <br>
+                        <strong>Message:</strong> <%= message.message %>
+                        <br>
+                        <small><strong>Date Sent:</strong> <%= message.date_sent %></small>
+                    </li>
+                <% }); %>
+            </ul>
+        </section>
+
+        <!-- Messaging Form -->
+        <section>
+            <form action="/send-message" method="POST">
+                <div>
+                    <label for="message">Message:</label>
+                    <textarea name="message" required></textarea>
+                </div>
+                <div>
+                    <button type="submit">Send Message</button>
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
+
+</html>
