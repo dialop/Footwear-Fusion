@@ -8,6 +8,7 @@ const { getFilteredProducts } = require('../db/queries/filterProducts');
 const { getProductDetail } = require('../db/queries/getProductDetail');
 const { editProduct } = require('../db/queries/editProduct');
 const { deleteProduct } = require('../db/queries/deleteProduct');
+const { markAsSold } = require('../db/queries/sold');
 
 
 
@@ -91,8 +92,17 @@ router.post('/:id/delete', (req, res) => {
 });
 
 
+// ----  ROUTE TO MARK PRODUCT AS SOLD ---- //
+router.post('/:id/sold', (req, res) => {
+    const productId = req.params.id;
 
-
+    markAsSold(productId)
+        .then((data) => {
+            console.log(data);
+            res.redirect('/myProducts');
+        })
+        .catch(err => console.log(err));
+});
 
 
 // Export the router for use in the main application

@@ -14,7 +14,6 @@
   <link rel="stylesheet" href="/styles/products.css">
 
 
-
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script defer src="/scripts/app.js"></script>
 </head>
@@ -43,8 +42,16 @@
         <p>$<%= product.price %>
         </p>
         <div>
-          <button>Mark as Sold</button>
-          <button><a href="/products/<%= product.id %>/edit">Edit</a></button>
+          <% if (product.is_sold === true) { %>
+            <p class="sold">This product has been sold.</p>
+          <% } else { %>
+            <form method="POST" action="/products/<%= product.id %>/sold">
+              <button type="submit">Mark as Sold</button>
+            </form>
+            <button><a href="/products/<%= product.id %>/edit">Edit</a></button>
+          <% } %>
+        
+          
           <form method="POST" action="/products/<%= product.id %>/delete">
             <button type="submit">Delete</button>
           </form>
