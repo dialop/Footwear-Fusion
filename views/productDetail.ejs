@@ -48,12 +48,11 @@
     <!-- User interaction section (if user is logged in) -->
     <div>
         <!-- Favorite icon -->
-        <form action="/add-to-favorites" method="POST">
-            <input type="hidden" name="productId" value="<%= productDetail.id %>"> 
-            <!-- Assuming productDetail has an 'id' property -->
-            <button type="submit" class="heart-button">
-              <i class="fa-regular fa-heart"></i>
-            </button>
+        <form action="/favorites" method="POST">
+            <input type="hidden" name="id" value="<%= productDetail.id %>"> 
+            <div class="item">
+                <button type="submit">❤️</button> 
+              </div>
           </form>
           
         <!-- Message form -->

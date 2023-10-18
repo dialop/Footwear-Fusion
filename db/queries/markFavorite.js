@@ -21,6 +21,7 @@ const getFavoritesForUser = async() => {
   try {
       const result = await db.query(`
       SELECT 
+      p.id,
       p.title,
       p.model,
       p.description,
@@ -36,7 +37,6 @@ const getFavoritesForUser = async() => {
   WHERE 
       f.user_id = $1;
 `, [hardcodedUserId]);
-      console.log(result.rows, "query", hardcodedUserId);
       return result.rows;
   } catch (error) {
       throw new Error(`Error retrieving favorites for user with ID ${hardcodedUserId}: ${error.message}`);
@@ -44,5 +44,17 @@ const getFavoritesForUser = async() => {
 };
 
 
+function deleteFavorite(productId) {
+  // Logic to remove the product with productId from the favorites table
+  return new Promise((resolve, reject) => {
+      // Example with a hypothetical DB library:
+      db.query("DELETE FROM favorites WHERE product_id = ?", [productId], function(err, results) {
+          if (err) return reject(err);
+          resolve(results);
+      });
+  });
+}
 
-module.exports = { markAsFavorite, getFavoritesForUser };
+
+
+module.exports = { markAsFavorite, getFavoritesForUser, deleteFavorite };
