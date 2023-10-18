@@ -171,7 +171,6 @@ app.get('/', (req, res) => {
 });
 
 
-
 //Diana L
 // Register GET Endpoint
 app.get('/register', (req, res) => {
@@ -207,7 +206,10 @@ app.post('/logout', (req, res) => {
 
 
 
-
+// Helper functions
+const generateRandomString = function() {
+  return Math.random().toString(36).substring(2, 8);
+};
 
 // Server
 app.listen(PORT, () => {
