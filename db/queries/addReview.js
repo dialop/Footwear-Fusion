@@ -1,5 +1,6 @@
 // ---- HANDLES DATABASE QUERIES RELATED TO PRODUCT REVIEWS ----//
 
+
 const db = require('../connection');
 
 const addReview = async(reviewDetails) => {

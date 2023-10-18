@@ -1,0 +1,66 @@
+<!--
+    Title: ALL FAVORITES PAGE 
+    Description: Displays a list of all product that were favorited by the user
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Page Title -->
+    <title>My Favorites</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
+    <link rel="stylesheet" href="/vendor/border-box.css" />
+    <link rel="stylesheet" href="/styles/layout.css" />
+    <link rel="stylesheet" href="/styles/nav.css">
+    <link rel="stylesheet" href="/styles/products.css">
+
+    <!-- Scripts -->
+    <script src="/vendor/jquery-3.0.0.js"></script>
+    <script defer src="/scripts/app.js"></script>
+</head>
+
+<body>
+    <main>
+        <!-- Main Heading -->
+        <h1>My Favorites</h1>
+
+        <section>
+            <!-- Check if there are any favorites -->
+            <% if(favorites.length > 0) { %>
+                <!-- Loop through each product in the favorites list -->
+                <% favorites.forEach(product => { %>
+                    <div class="product">
+                        <!-- Display product image -->
+                        <img src="<%= product.photo_url %>" alt="Product Image of <%= product.title %>">
+                        
+                        <!-- Display product details -->
+                        <h2><%= product.title %></h2>
+                        <p><strong>Model:</strong> <%= product.model %></p>
+                        <p><strong>Description:</strong> <%= product.description %></p>
+                        <p><strong>Size:</strong> <%= product.size %></p>
+                        <p><strong>Color:</strong> <%= product.color %></p>
+                        <p><strong>Price:</strong> $<%= product.price %></p>
+                        <p><%= product.id %></p>
+
+                        <!-- Delete button -->
+                            <form method="POST" action="/favorites/<%= product.id %>/delete">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <!-- Display a message if there are no favorites -->
+                <p>No products have been added to favorites yet.</p>
+            <% } %>
+            
+        </section>
+    </main>
+</body>
+</html>

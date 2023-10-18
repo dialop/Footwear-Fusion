@@ -13,6 +13,7 @@ const getFilteredProducts = (products, limit = 10) => {
   FROM products
   LEFT JOIN product_reviews ON products.id = product_id
   WHERE 1 = 1
+  AND is_sold = false
   `;
   
   // Add filter for product title
@@ -41,6 +42,7 @@ const getFilteredProducts = (products, limit = 10) => {
       queryString += ` AND price <= $${queryParams.length}`;
     }
   }
+  
 
   // Group the results by product ID
   queryString += `

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>All products</title>
 
@@ -11,7 +12,6 @@
   <link rel="stylesheet" href="/styles/layout.css" />
   <link rel="stylesheet" href="/styles/nav.css">
   <link rel="stylesheet" href="/styles/products.css">
-
 
 
   <script src="/vendor/jquery-3.0.0.js"></script>
@@ -27,26 +27,40 @@
 
 
   <a href="myProducts/new">Add new product</a>
-  
 
 
-<div class="products">
-  <% products.forEach(product => { %>
-    <div class="product-card">
-      <a href="/products/<%= product.id %>">
-        <img src="<%= product.photo_url %>" alt="<%= product.title %>">
-      </a>
-      <p><%= product.title %></p>
-      <p>$<%= product.price %></p>
-      <div>    
-        <button>Mark as Sold</button>
-        <a href="/products/<%= product.id %>/edit"><button>Edit</button></a>
-        <button>Delete</button>
+
+  <div class="products">
+    <% products.forEach(product=> { %>
+      <div class="product-card">
+        <a href="/products/<%= product.id %>">
+          <img src="<%= product.photo_url %>" alt="<%= product.title %>">
+        </a>
+        <p>
+          <%= product.title %>
+        </p>
+        <p>$<%= product.price %>
+        </p>
+        <div>
+          <% if (product.is_sold === true) { %>
+            <p class="sold">This product has been sold.</p>
+          <% } else { %>
+            <form method="POST" action="/products/<%= product.id %>/sold">
+              <button type="submit">Mark as Sold</button>
+            </form>
+            <button><a href="/products/<%= product.id %>/edit">Edit</a></button>
+          <% } %>
+        
+          
+          <form method="POST" action="/products/<%= product.id %>/delete">
+            <button type="submit">Delete</button>
+          </form>
+        </div>
       </div>
-    </div>
-  <% }); %>
+      <% }); %>
 
-</div>
+  </div>
 
 </body>
+
 </html>

@@ -7,4 +7,3 @@ CREATE TABLE reviews (
     product_id INT REFERENCES products(id),
     content TEXT NOT NULL
 );
-
