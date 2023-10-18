@@ -33,10 +33,7 @@ const requireLogin = (req, res, next) => {
   }
   next();
 };
-//Diana L
-app.use('/favorites', requireLogin);
-app.use('/messages', requireLogin);
-// Add other routes you want to secure
+
 
 
 // Configure SASS middleware
