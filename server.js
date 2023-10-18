@@ -75,6 +75,8 @@ const myProductsRoutes = require('./routes/myProducts');
 const { getFilteredProducts } = require('./db/queries/filterProducts');
 const { sendMessage, getAllMessages } = require('./db/queries/messages'); 
 const { getFavoritesForUser } = require('./db/queries/markFavorite');
+const { markAsFavorite } = require('./db/queries/markFavorite');
+
 
 
 
@@ -100,6 +102,18 @@ app.get('/favorites', async (req, res) => {
   }
 });
 
+
+app.post('/add-to-favorites', async (req, res) => {
+  const productId = req.body.productId;
+
+  try {
+    await markAsFavorite(productId);
+    res.redirect('/favorites');
+  } catch (error) {
+    console.error("Error adding to favorites:", error);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
 
 // -- GET ENDPOINT SEND MESSAGES -- //
