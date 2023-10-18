@@ -4,31 +4,25 @@
 -->
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
     <title>Login</title>
-
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="/styles/loginStyle.css">
-    <link rel="stylesheet" href="/styles/nav.css">
 </head>
 
 <body>
-    <!-- Header section -->
     <header>
         <%- include('partials/_header') %>
+        <link rel="stylesheet" href="/styles/loginStyle.css">
+        <link rel="stylesheet" href="/styles/nav.css">
     </header>
 
-    <!-- Login form section -->
-    <section>
-        <h1>Sign In</h1>
-        <form method="POST" action="/login">
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <button type="submit">Login</button>
-        </form>
-    </body>
+    <h1>Sign In</h1>
+    <form method="POST" action="/login">
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+    </form>
+</body>
 
 </html>

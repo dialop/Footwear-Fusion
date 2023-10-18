@@ -35,6 +35,12 @@ app.use(
     isSass: false, // false => scss, true => sass
   })
 );
+app.use(express.static('public'));
+
+
+// Separated Routes for each Resource
+// Note: Feel free to replace the example routes below with your own
+
 
 
 // Routes
@@ -42,6 +48,8 @@ const userApiRoutes = require('./routes/users-api');
 const widgetApiRoutes = require('./routes/widgets-api');
 const usersRoutes = require('./routes/users');
 const productsRoutes = require('./routes/products');
+const loginRouter = require('./routes/login');
+const favoritesRouter = require('./routes/favorites');
 const myProductsRoutes = require('./routes/myProducts');
 const { getFilteredProducts } = require('./db/queries/filterProducts');
 const { sendMessage, getAllMessages } = require('./db/queries/messages');
@@ -54,6 +62,7 @@ app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
 app.use('/products', productsRoutes);
+app.use('/login', loginRouter);
 app.use('/myProducts', myProductsRoutes);
 
 
@@ -161,32 +170,6 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-//Diana L
-//Login POST Endpoint
-app.post('/login', async(req, res) => {
-  const { email, password } = req.body;
-
-  try {
-    // Fetch the user by email from the database
-    const user = await getUserByEmail(email);
-
-    if (user) {
-      // Compare the hashed password stored in the database with the password provided by the user
-      if (bcrypt.compareSync(password, user.password)) {
-        // Store user id in the session
-        req.session.user_id = user.id;
-        res.redirect('/');
-      } else {
-        res.status(403).send('Invalid password');
-      }
-    } else {
-      res.status(403).send('User not found');
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
-  }
-});
 
 //Diana L
 // Register GET Endpoint
@@ -221,16 +204,12 @@ app.post('/logout', (req, res) => {
   res.redirect('/');
 });
 
+
+
 // Helper functions
 const generateRandomString = function() {
   return Math.random().toString(36).substring(2, 8);
 };
-
-// Diana L
-const getUserByEmail = (email, users) => {
-  return users.find((user) => user.email === email) || null;
-};
-
 
 // Server
 app.listen(PORT, () => {
