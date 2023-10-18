@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>All products</title>
 
@@ -27,26 +28,32 @@
 
 
   <a href="myProducts/new">Add new product</a>
-  
 
 
-<div class="products">
-  <% products.forEach(product => { %>
-    <div class="product-card">
-      <a href="/products/<%= product.id %>">
-        <img src="<%= product.photo_url %>" alt="<%= product.title %>">
-      </a>
-      <p><%= product.title %></p>
-      <p>$<%= product.price %></p>
-      <div>    
-        <button>Mark as Sold</button>
-        <a href="/products/<%= product.id %>/edit"><button>Edit</button></a>
-        <button>Delete</button>
+
+  <div class="products">
+    <% products.forEach(product=> { %>
+      <div class="product-card">
+        <a href="/products/<%= product.id %>">
+          <img src="<%= product.photo_url %>" alt="<%= product.title %>">
+        </a>
+        <p>
+          <%= product.title %>
+        </p>
+        <p>$<%= product.price %>
+        </p>
+        <div>
+          <button>Mark as Sold</button>
+          <button><a href="/products/<%= product.id %>/edit">Edit</a></button>
+          <form method="POST" action="/products/<%= product.id %>/delete">
+            <button type="submit">Delete</button>
+          </form>
+        </div>
       </div>
-    </div>
-  <% }); %>
+      <% }); %>
 
-</div>
+  </div>
 
 </body>
+
 </html>

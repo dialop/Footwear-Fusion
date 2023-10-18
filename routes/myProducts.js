@@ -11,7 +11,7 @@ const { addProduct  } = require('../db/queries/addProduct'); // Import the funct
 router.get('/', (req, res) => {
   getMyProducts()
     .then(products => {
-      console.log('Products:', products);
+      // console.log('Products:', products);
       res.render('myProducts', { products }); // Move this line inside the promise callback
     })
     .catch((e) => {
@@ -43,9 +43,5 @@ router.post('/new', (req, res) => {
 router.get('/new', (req, res) => {
   res.render('add-product');
 });
-
-
-
-
 
 module.exports = router;

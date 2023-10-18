@@ -7,6 +7,7 @@ const router = express.Router();
 const { getFilteredProducts } = require('../db/queries/filterProducts');
 const { getProductDetail } = require('../db/queries/getProductDetail');
 const { editProduct } = require('../db/queries/editProduct');
+const { deleteProduct } = require('../db/queries/deleteProduct');
 
 
 
@@ -49,20 +50,20 @@ router.post('/:id/edit', (req, res) => {
     const { title, model, description, size, color, price, photo_url } = req.body;
 
     editProduct({ title, model, description, size, color, price, photo_url }, productId)
-    .then(product => {
-        // Render the product detail using Express and EJS template
-        res.json({ product })
-    })
-    .catch(e => {
-        console.error(e);
-        res.send(e);
-    });
+        .then(product => {
+            // Render the product detail using Express and EJS template
+            res.json({ product });
+        })
+        .catch(e => {
+            console.error(e);
+            res.send(e);
+        });
     res.redirect('/myProducts');
-})
+});
 
-  
 
-// ----  ROUTE TO EDIT PRODUCT DETAILS ---- //
+
+// ----  ROUTE TO DISPLAY EDIT PRODUCT DETAILS PAGE---- //
 router.get('/:id/edit', (req, res) => {
     const productId = req.params.id;
     getProductDetail(productId)
@@ -75,8 +76,24 @@ router.get('/:id/edit', (req, res) => {
             console.error(e);
             res.send(e);
         });
-  });
-  
+});
+
+// ----  ROUTE TO DELETE NEW PRODUCT ---- //
+router.post('/:id/delete', (req, res) => {
+    const productId = req.params.id;
+
+    deleteProduct(productId)
+        .then((data) => {
+            console.log(data);
+            res.redirect('/myProducts');
+        })
+        .catch(err => console.log(err));
+});
+
+
+
+
+
 
 // Export the router for use in the main application
 module.exports = router;
