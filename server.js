@@ -170,32 +170,7 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-//Diana L
-//Login POST Endpoint
-app.post('/login', async(req, res) => {
-  const { email, password } = req.body;
 
-  try {
-    // Fetch the user by email from the database
-    const user = await getUserByEmail(email);
-
-    if (user) {
-      // Compare the hashed password stored in the database with the password provided by the user
-      if (bcrypt.compareSync(password, user.password)) {
-        // Store user id in the session
-        req.session.user_id = user.id;
-        res.redirect('/');
-      } else {
-        res.status(403).send('Invalid password');
-      }
-    } else {
-      res.status(403).send('User not found');
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
-  }
-});
 
 //Diana L
 // Register GET Endpoint
@@ -231,10 +206,7 @@ app.post('/logout', (req, res) => {
 });
 
 
-// Diana L
-const getUserByEmail = (email, users) => {
-  return users.find((user) => user.email === email) || null;
-};
+
 
 
 // Server
