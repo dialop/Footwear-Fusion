@@ -39,8 +39,6 @@ app.use(
   })
 );
 
-// Diana Lopez- FAVORITES ROUTER
-const favoritesRouter = require('./routes/favorites'); 
 
 
 // Separated Routes for each Resource
@@ -76,6 +74,8 @@ const productsRoutes = require('./routes/products');
 const myProductsRoutes = require('./routes/myProducts');
 const { getFilteredProducts } = require('./db/queries/filterProducts');
 const { sendMessage, getAllMessages } = require('./db/queries/messages'); 
+const { getFavoritesForUser } = require('./db/queries/markFavorite');
+const { markAsFavorite } = require('./db/queries/markFavorite');
 
 
 
@@ -84,10 +84,39 @@ app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
 app.use('/products', productsRoutes);
-app.use('/favorites', favoritesRouter);
 app.use('/myProducts', myProductsRoutes);
 
-// -- GET ROUTE SEND MESSAGES -- //
+
+
+//-- GET ENDPOINT USER FAVORITE PRODUCTS --//
+app.get('/favorites', async (req, res) => {
+  try {
+    const favorites = await getFavoritesForUser();
+    res.render('favorites', {
+      favorites: favorites,
+      // query: req.query
+    });
+  } catch (error) {
+    console.error(error); 
+    res.status(500).send(`Server error: ${error.message}`);
+  }
+});
+
+
+app.post('/add-to-favorites', async (req, res) => {
+  const productId = req.body.productId;
+
+  try {
+    await markAsFavorite(productId);
+    res.redirect('/favorites');
+  } catch (error) {
+    console.error("Error adding to favorites:", error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
+// -- GET ENDPOINT SEND MESSAGES -- //
 app.get('/messages', async (req, res) => {
   try {
       const messages = await getAllMessages();
@@ -97,6 +126,7 @@ app.get('/messages', async (req, res) => {
   }
 });
 
+// -- POST ENDPOINT SEND MESSAGES -- //
 app.post('/send-message', async (req, res) => {
   const { sender_id, receiver_id, product_id, message } = req.body;
 
@@ -109,7 +139,7 @@ app.post('/send-message', async (req, res) => {
 });
 
 
-// -- GET ROUTE TO ACCESS FILTERED PRODUCTS -- //
+// -- GET ENDPOINT TO ACCESS FILTERED PRODUCTS -- //
 app.get('/filterProducts', (req, res) => {
   console.log("Accessed /filterProducts"); 
   const products = req.query;

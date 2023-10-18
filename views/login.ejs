@@ -1,14 +1,28 @@
+<!--
+    Title: LOGIN PAGE 
+    Description: Displays login page content
+-->
+
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Login</title>
+<html lang="en">
 
-    </head>
-    <body>
-        <header>
-            <%- include('partials/_header') %>
-          </header>
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
 
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/styles/loginStyle.css">
+    <link rel="stylesheet" href="/styles/nav.css">
+</head>
+
+<body>
+    <!-- Header section -->
+    <header>
+        <%- include('partials/_header') %>
+    </header>
+
+    <!-- Login form section -->
+    <section>
         <h1>Login</h1>
         <form method="POST" action="/login">
             <label for="username">Username:</label>
@@ -19,8 +33,7 @@
 
             <input type="submit" value="Login">
         </form>
-    </body>
-</html>
+    </section>
+</body>
 
-<link rel="stylesheet" href="/styles/loginStyle.css">
-<link rel="stylesheet" href="/styles/nav.css">
+</html>
