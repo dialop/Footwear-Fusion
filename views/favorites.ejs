@@ -1,6 +1,6 @@
 <!--
     Title: ALL FAVORITES PAGE 
-    Description: Displays a list of all product that were favorited by user
+    Description: Displays a list of all product that were favorited by the user
 -->
 
 <!DOCTYPE html>
@@ -20,18 +20,16 @@
     <link rel="stylesheet" href="/styles/layout.css" />
     <link rel="stylesheet" href="/styles/nav.css">
     <link rel="stylesheet" href="/styles/products.css">
-    <link rel="stylesheet" href="/styles/favorites.css">
 
     <!-- Scripts -->
     <script src="/vendor/jquery-3.0.0.js"></script>
     <script defer src="/scripts/app.js"></script>
 </head>
 
-
 <body>
     <main>
         <!-- Main Heading -->
-        <h1>My Favourites</h1>
+        <h1>My Favorites</h1>
 
         <section>
             <!-- Check if there are any favorites -->
@@ -49,12 +47,19 @@
                         <p><strong>Size:</strong> <%= product.size %></p>
                         <p><strong>Color:</strong> <%= product.color %></p>
                         <p><strong>Price:</strong> $<%= product.price %></p>
+                        <p><%= product.id %></p>
+
+                        <!-- Delete button -->
+                            <form method="POST" action="/favorites/<%= product.id %>/delete">
+                            <button type="submit">Delete</button>
+                        </form>
                     </div>
                 <% }) %>
             <% } else { %>
                 <!-- Display a message if there are no favorites -->
                 <p>No products have been added to favorites yet.</p>
             <% } %>
+            
         </section>
     </main>
 </body>
