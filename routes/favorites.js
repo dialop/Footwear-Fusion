@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const { markFavorite, getFavoritesForUser } = require('../db/queries/markFavorite');  // Import the new function
+const { markFavorite, getFavoritesForUser } = require('../db/queries/markFavorite');  
 
 router.post('/mark', (req, res) => {
     const userId = req.body.userId; 
@@ -45,5 +45,23 @@ router.get('/favorites/:userId', (req, res) => {
             .json({ error: err.message });
         });
 });
+
+
+
+router.post('/favorites/add', (req, res) => {
+    const productId = req.body.productId; // Assuming the product ID is sent in the request body
+    const userId = req.session.user_id.id; // Get the user ID from the session
+  
+    // Call the addToFavorites function to add the product to favorites
+    addToFavorites(productId, userId)
+      .then(() => {
+        res.status(200).json({ message: 'Product added to favorites successfully' });
+      })
+      .catch((error) => {
+        console.error('Error adding product to favorites:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      });
+  });
+  
 
 module.exports = router;
