@@ -29,42 +29,42 @@ app.use(
 app.use(express.static('public'));
 
 // 
-app.use(
-  cookieSession({
-    name: "session",
-    keys: [`key1`],
+// app.use(
+//   cookieSession({
+//     name: "session",
+//     keys: [`key1`],
 
-    // Cookie Options
-    maxAge: 24 * 60 * 60 * 1000, // 24 hours
-  })
-);
+//     // Cookie Options
+//     maxAge: 24 * 60 * 60 * 1000, // 24 hours
+//   })
+// );
 
 
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 
-// User data (consider moving this to a separate file)
-const users = [
-  {
-    name: 'John Doe',
-    email: 'johndoe@example.com',
-    password: 'password123',
-    isAdmin: false,
-  },
-  {
-    name: 'Jane Doe',
-    email: 'janedoe@example.com',
-    password: 'password456',
-    isAdmin: true,
-  },
-  {
-    name: 'Bob Smith',
-    email: 'bobsmith@example.com',
-    password: 'password789',
-    isAdmin: false,
-  },
-];
+// // User data (consider moving this to a separate file)
+// const users = [
+//   {
+//     name: 'John Doe',
+//     email: 'johndoe@example.com',
+//     password: 'password123',
+//     isAdmin: false,
+//   },
+//   {
+//     name: 'Jane Doe',
+//     email: 'janedoe@example.com',
+//     password: 'password456',
+//     isAdmin: true,
+//   },
+//   {
+//     name: 'Bob Smith',
+//     email: 'bobsmith@example.com',
+//     password: 'password789',
+//     isAdmin: false,
+//   },
+// ];
 
 // Routes
 const userApiRoutes = require('./routes/users-api');
@@ -85,6 +85,8 @@ app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
 app.use('/products', productsRoutes);
 app.use('/myProducts', myProductsRoutes);
+app.use('/login', loginRouter);
+
 
 
 
@@ -162,13 +164,7 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-
-
-
-
-
-
-// Login GET route
+// Login GET Endpoint
 app.get('/login', (req, res) => {
   res.render('login');
 });
@@ -189,12 +185,12 @@ app.post('/login', (req, res) => {
 });
 
 
-// Register GET route
+// Register GET Endpoint
 app.get('/register', (req, res) => {
   res.render('register');
 });
 
-// Register POST route
+// Register POST Endpoint
 app.post('/register', (req, res) => {
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
@@ -210,7 +206,7 @@ app.post('/register', (req, res) => {
   }
 });
 
-// Logout POST route
+// Logout POST Endpoint
 app.post('/logout', (req, res) => {
   req.session = null;
   res.redirect('/');
@@ -224,6 +220,7 @@ const generateRandomString = function() {
 const getUserByEmail = (email, users) => {
   return users.find((user) => user.email === email) || null;
 };
+
 
 // Server
 app.listen(PORT, () => {
