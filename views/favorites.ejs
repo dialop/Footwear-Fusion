@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Favourites</title>
+</head>
+
+<body>
+    <main>
+        <h1>My Favourites</h1>
+       
+        <section>
+            <% if(favorites.length > 0) { %>
+                <% favorites.forEach(product => { %>
+                    <div>
+                        <img src="<%= product.image_url %>" alt="Product Image">
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <p>No products have been added to favorites yet.</p>
+            <% } %>
+            
+                    </div>
+        </section>
+
+    </main>
+    
+
+
+</body>
+
+</html>
