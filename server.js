@@ -10,11 +10,34 @@ const bcrypt = require('bcrypt');
 const app = express();
 const PORT = process.env.PORT || 8080;
 
+
+
 // Middleware
 app.set('view engine', 'ejs');
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
+
+//Diana
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2'],  // You should use environment variables for real-world applications
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}));
+
+
+//Diana
+const requireLogin = (req, res, next) => {
+  if (!req.session.user_id) {
+    return res.redirect('/login');
+  }
+  next();
+};
+//Diana L
+app.use('/favorites', requireLogin);
+app.use('/messages', requireLogin);
+// Add other routes you want to secure
+
 
 // Configure SASS middleware
 const sassMiddleware = require('./lib/sass-middleware');
@@ -26,45 +49,7 @@ app.use(
     isSass: false, // false => scss, true => sass
   })
 );
-app.use(express.static('public'));
 
-// 
-// app.use(
-//   cookieSession({
-//     name: "session",
-//     keys: [`key1`],
-
-//     // Cookie Options
-//     maxAge: 24 * 60 * 60 * 1000, // 24 hours
-//   })
-// );
-
-
-
-// Separated Routes for each Resource
-// Note: Feel free to replace the example routes below with your own
-
-// // User data (consider moving this to a separate file)
-// const users = [
-//   {
-//     name: 'John Doe',
-//     email: 'johndoe@example.com',
-//     password: 'password123',
-//     isAdmin: false,
-//   },
-//   {
-//     name: 'Jane Doe',
-//     email: 'janedoe@example.com',
-//     password: 'password456',
-//     isAdmin: true,
-//   },
-//   {
-//     name: 'Bob Smith',
-//     email: 'bobsmith@example.com',
-//     password: 'password789',
-//     isAdmin: false,
-//   },
-// ];
 
 // Routes
 const userApiRoutes = require('./routes/users-api');
@@ -76,6 +61,7 @@ const { getFilteredProducts } = require('./db/queries/filterProducts');
 const { sendMessage, getAllMessages } = require('./db/queries/messages'); 
 const { getFavoritesForUser } = require('./db/queries/markFavorite');
 const { markAsFavorite } = require('./db/queries/markFavorite');
+const loginRouter = require('./db/queries/users');
 
 
 
@@ -85,7 +71,6 @@ app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
 app.use('/products', productsRoutes);
 app.use('/myProducts', myProductsRoutes);
-app.use('/login', loginRouter);
 
 
 
@@ -96,7 +81,7 @@ app.get('/favorites', async (req, res) => {
     const favorites = await getFavoritesForUser();
     res.render('favorites', {
       favorites: favorites,
-      // query: req.query
+     
     });
   } catch (error) {
     console.error(error); 
@@ -164,46 +149,58 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-// Login GET Endpoint
-app.get('/login', (req, res) => {
-  res.render('login');
-});
-
-// Login POST route
-// Login POST route
-app.post('/login', (req, res) => {
+//Diana L
+//Login POST Endpoint
+app.post('/login', async (req, res) => {
   const { email, password } = req.body;
-  const user = getUserByEmail(email, users);
-  if (!user) {
-    res.status(401).send('Invalid email or password');
-  } else if (!bcrypt.compareSync(password, user.password)) {
-    res.status(401).send('Invalid email or password');
-  } else {
-    req.session.user_id = user.id;
-    res.redirect('/products');
+
+  try {
+    // Fetch the user by email from the database
+    const user = await getUserByEmail(email);
+
+    if (user) {
+      // Compare the hashed password stored in the database with the password provided by the user
+      if (bcrypt.compareSync(password, user.password)) {
+        // Store user id in the session
+        req.session.user_id = user.id;
+        res.redirect('/');
+      } else {
+        res.status(403).send('Invalid password');
+      }
+    } else {
+      res.status(403).send('User not found');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
   }
 });
 
-
+//Diana L
 // Register GET Endpoint
 app.get('/register', (req, res) => {
   res.render('register');
 });
 
 // Register POST Endpoint
-app.post('/register', (req, res) => {
+app.post('/register', async (req, res) => { 
   const { name, email, password } = req.body;
+
   if (!name || !email || !password) {
-    res.status(400).send('Please fill out all fields');
-  } else if (getUserByEmail(email, users)) {
-    res.status(400).send('User already exists');
-  } else {
-    const id = generateRandomString();
-    const user = { id, name, email, password };
-    users.push(user); // Append the new user to the array
-    req.session.user_id = id;
-    res.redirect('/'); // Redirect to the homepage after successful registration
+    return res.status(400).send('Please fill out all fields'); 
   }
+
+  if (await getUserByEmail(email)) {
+    return res.status(400).send('User already exists'); 
+  }
+
+  const id = generateRandomString();
+  const user = {name, email, password};
+
+  await db.query('INSERT INTO users (id, name, email, password) VALUES ($1, $2, $3, $4)', [name, email, password]);
+
+  req.session.user_id = id;
+  res.redirect('/'); 
 });
 
 // Logout POST Endpoint
@@ -217,6 +214,7 @@ const generateRandomString = function() {
   return Math.random().toString(36).substring(2, 8);
 };
 
+// Diana L
 const getUserByEmail = (email, users) => {
   return users.find((user) => user.email === email) || null;
 };
