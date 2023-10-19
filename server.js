@@ -77,7 +77,7 @@ app.get('/favorites', async(req, res) => {
     favorites = favorites.filter(product => product.description !== null);
     res.render('favorites', {
       favorites: favorites, 
-      user: user.id
+      user: user
     });
   } catch (error) {
     console.error(error);
