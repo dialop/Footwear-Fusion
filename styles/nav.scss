@@ -1,9 +1,22 @@
 .navbar {
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
+  padding: 10px;
+  font-size: 18px;
 }
 
-a {
-  padding: 10px;
+.nav-item {
+  padding: 12px;
+  color: black;
+}
+
+.nav-end{
+  display: flex;
+  justify-content: center;
+
+}
+
+.nav-btn {
+  background-color: transparent;
+  border: white 2px solid;
+  border-radius: 10px;
+  align-self: center;
 }

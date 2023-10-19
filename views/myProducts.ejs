@@ -10,8 +10,9 @@
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
   <link rel="stylesheet" href="/vendor/border-box.css" />
   <link rel="stylesheet" href="/styles/layout.css" />
-  <link rel="stylesheet" href="/styles/nav.css">
   <link rel="stylesheet" href="/styles/products.css">
+  <link rel="stylesheet" href="/styles/nav.css">
+  
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
   integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous" />
@@ -36,7 +37,7 @@
 
   <div class="products">
     <% products.forEach(product=> { %>
-      <div class="product-card">
+      <div class="product-card ">
         <a href="/products/<%= product.id %>">
           <img src="<%= product.photo_url %>" alt="<%= product.title %>">
         </a>

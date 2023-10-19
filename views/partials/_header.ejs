@@ -1,27 +1,30 @@
 <header>
   <nav class="navbar">
-    <div>
-      <a href="/">Footwear Fusion Home</a>
-      <a href="/products">All products</a>
+    <div >
+      <a class="nav-item" href="/">Home</a>
+      <a  class="nav-item" href="/products">All products</a>
       
     <% if (user) { %>
-      <a href="/myProducts">My Listing</a>
-      <a href="/favorites">My favorites</a>
+      <a class="nav-item" class="nav-item" href="/myProducts">My Listing</a>
+      <a class="nav-item" href="/favorites">My favorites</a>
+      <a class="nav-item" href="/messages">My messages</a>
     </div>
 
-    <div>
-      <p >Hello,  <%= user.name %></p>
-      <a href="/messages">My messages</a>
+    <div class="nav-end">
+      <p class="nav-item">Hello,  <%= user.name %></p>
       <form method="POST" action="/login/logout">
-        <button type="submit">Logout</button>
+        <button class="nav-btn nav-item " type="submit">Logout</button>
        </form>
       <%  } %>
+    </div>
 
       <%  if (!user) { %>
-      <a href="/login">Sign In</a>
-      <a href="/register">Create account</a>
-      <%  } %>
+        <div>
+      <a class="nav-item" href="/login">Sign In</a>
+      <a class="nav-item" href="/register">Create account</a>
     </div>
+      <%  } %>
+
 
   </nav>
 </header>
