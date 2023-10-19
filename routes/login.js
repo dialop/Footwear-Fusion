@@ -7,20 +7,24 @@ const { getUserByEmail } = require('../db/queries/users');
 
 // Login GET route
 router.get('/', (req, res) => {
-    res.render('login');
+    const user = req.session.user;
+
+    res.render('login', { user});
 });
 
 router.post('/logout', (req, res) => {
-    res.clearCookie('user_id');
-
+    req.session = null;
     res.redirect('/');
 });
+
+
 
 // Login POST route
 router.post('/', (req, res) => {
     console.log('req.body login:', req.body);
 
-    getUserByEmail(req.body.email).then(user => {
+    getUserByEmail(req.body.email)
+    .then(user => {
         
         if (!user) {
            return res.status(403).send('User not found');
@@ -30,8 +34,14 @@ router.post('/', (req, res) => {
             return res.status(403).send('Incorrect password');
         }
 
-        res.cookie('user_id', user.id);
-        res.redirect('/products');
+
+        req.session.user = user;
+        console.log('user from post', user.name);
+        res.redirect('/')
+        .catch(error => {
+            console.error(error);
+            res.status(500).send('Internal Server Error');
+        });
     })
 
 }

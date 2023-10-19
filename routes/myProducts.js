@@ -9,10 +9,12 @@ const { addProduct  } = require('../db/queries/addProduct'); // Import the funct
 
 
 router.get('/', (req, res) => {
-  getMyProducts()
+  const user = req.session.user;
+
+  getMyProducts(user.id)
     .then(products => {
       // console.log('Products:', products);
-      res.render('myProducts', { products }); // Move this line inside the promise callback
+      res.render('myProducts', { products, user }); // Move this line inside the promise callback
     })
     .catch((e) => {
       console.error(e);
@@ -23,9 +25,9 @@ router.get('/', (req, res) => {
 // ----  ROUTE TO ADD NEW PRODUCT ---- //
 router.post('/new', (req, res) => {
   //This is just for testing, before we have login
-  req.session.user_id = {id : 1};
+  const user = req.session.user;
   
-  addProduct(req.body, req.session.user_id.id)
+  addProduct(req.body, user.id)
   .then(product => {
     console.log(req.query);
     console.log('Add product:', product);
@@ -41,7 +43,8 @@ router.post('/new', (req, res) => {
 
 // ----  ROUTE TO DISPLAY ADD PRODUCT PAGE---- //
 router.get('/new', (req, res) => {
-  res.render('add-product');
+  const user = req.session.user;
+  res.render('add-product', { user });
 });
 
 module.exports = router;

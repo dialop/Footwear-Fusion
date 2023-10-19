@@ -45,7 +45,7 @@
         <p>Price: $<%= productDetail.price %></p>
     </div>
 
-    <!-- User interaction section (if user is logged in) -->
+    <% if (user && productDetail.owner_id !== user.id) { %>
     <div>
         <!-- Favorite icon -->
         <form action="/favorites" method="POST">
@@ -57,10 +57,13 @@
           
         <!-- Message form -->
         <form action="/send-message" method="POST">
+            <input type="hidden" name="receiver_id" value="<%= productDetail.owner_id %>">
+            <input type="hidden" name="product_id" value="<%= productDetail.id %>">        
             <input type="text" name="message" placeholder="Type your message here...">
             <button type="submit">Send message</button>
         </form>
     </div>
+    <%  } %>
 </body>
 
 </html>
