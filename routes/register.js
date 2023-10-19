@@ -5,7 +5,8 @@ const bcrypt = require('bcrypt');
 
 // Register GET route
 router.get('/', (req, res) => {
-    res.render('register');
+    const user = req.session.user;
+    res.render('register', { user });
 });
 
 const { getUserByEmail, addUser } = require('../db/queries/users');
