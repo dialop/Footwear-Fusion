@@ -4,17 +4,23 @@
       <a href="/">Footwear Fusion Home</a>
       <a href="/products">All products</a>
       
-      <!-- if (user) -->
+    <% if (user) { %>
       <a href="/myProducts">My Listing</a>
       <a href="/favorites">My favorites</a>
     </div>
 
     <div>
+      <p >Hello,  <%= user.name %></p>
       <a href="/messages">My messages</a>
-      <button>Logout</button>
-      <!-- if (!user) -->
+      <form method="POST" action="/logout">
+        <button type="submit">Logout</button>
+       </form>
+      <%  } %>
+
+      <%  if (!user) { %>
       <a href="/login">Sign In</a>
       <a href="/register">Create account</a>
+      <%  } %>
     </div>
 
   </nav>
