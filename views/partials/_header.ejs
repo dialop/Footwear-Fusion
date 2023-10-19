@@ -11,7 +11,9 @@
 
     <div>
       <a href="/messages">My messages</a>
-      <button>Logout</button>
+      <form action="/login/logout" method="POST">
+        <button>Logout</button>
+      </form>
       <!-- if (!user) -->
       <a href="/login">Sign In</a>
       <a href="/register">Create account</a>

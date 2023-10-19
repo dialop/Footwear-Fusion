@@ -51,6 +51,7 @@ const productsRoutes = require('./routes/products');
 const loginRouter = require('./routes/login');
 const favoritesRouter = require('./routes/favorites');
 const myProductsRoutes = require('./routes/myProducts');
+const registerRoutes = require('./routes/register');
 const { getFilteredProducts } = require('./db/queries/filterProducts');
 const { sendMessage, getAllMessages } = require('./db/queries/messages');
 const { getFavoritesForUser } = require('./db/queries/markFavorite');
@@ -64,7 +65,7 @@ app.use('/users', usersRoutes);
 app.use('/products', productsRoutes);
 app.use('/login', loginRouter);
 app.use('/myProducts', myProductsRoutes);
-
+app.use('/register', registerRoutes);
 
 //-- GET ENDPOINT USER FAVORITE PRODUCTS --//
 app.get('/favorites', async(req, res) => {
@@ -170,46 +171,6 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-
-//Diana L
-// Register GET Endpoint
-app.get('/register', (req, res) => {
-  res.render('register');
-});
-
-// Register POST Endpoint
-app.post('/register', async(req, res) => {
-  const { name, email, password } = req.body;
-
-  if (!name || !email || !password) {
-    return res.status(400).send('Please fill out all fields');
-  }
-
-  if (await getUserByEmail(email)) {
-    return res.status(400).send('User already exists');
-  }
-
-  const id = generateRandomString();
-  const user = {name, email, password};
-
-  await db.query('INSERT INTO users (id, name, email, password) VALUES ($1, $2, $3, $4)', [name, email, password]);
-
-  req.session.user_id = id;
-  res.redirect('/');
-});
-
-// Logout POST Endpoint
-app.post('/logout', (req, res) => {
-  req.session = null;
-  res.redirect('/');
-});
-
-
-
-// Helper functions
-const generateRandomString = function() {
-  return Math.random().toString(36).substring(2, 8);
-};
 
 // Server
 app.listen(PORT, () => {
