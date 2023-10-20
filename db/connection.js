@@ -1,4 +1,5 @@
-// PG database client/connection setup
+// ----  PG DATABASE CLIENT AND CONNECTION SETUP  ----//
+
 const { Pool } = require('pg');
 
 const dbParams = {
