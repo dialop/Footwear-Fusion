@@ -39,15 +39,21 @@
         <%- include('partials/_header') %>
     </header>
 <main>
+    <div class="container">
     <!-- Product Details -->
-    <div class="card-body text-center mx-auto" style="max-width: 400px;">
-        <h2><%= productDetail.title %></h2>
+    <h1 class="text-center mb-5"><%= productDetail.title %></h1>
+    <div class="row featurette custom-gap">
+
+        <div class="order-md-1">
         <img src="<%= productDetail.photo_url %>" alt="Image of <%= productDetail.title %>">
-        <p>Model: <%= productDetail.model %></p>
-        <p>Description: <%= productDetail.description %></p>
-        <p>Size: <%= productDetail.size %></p>
-        <p>Color: <%= productDetail.color %></p>
-        <p>Price: $<%= productDetail.price %></p>
+    </div>
+    <div class="col-md-5 order-md-2">
+
+        <p><strong>Model</strong>: <%= productDetail.model %></p>
+        <p><strong>Description</strong>: <%= productDetail.description %></p>
+        <p><strong>Size</strong>: <%= productDetail.size %></p>
+        <p><strong>Color</strong>: <%= productDetail.color %></p>
+        <p><strong>Price</strong>: $<%= productDetail.price %></p>
 
 
     <% if (user && productDetail.owner_id !== user.id) { %>
@@ -70,6 +76,8 @@
             <button class="btn-card btn btn-primary" type="submit">Send message</button>
         </form>
     </div>
+    </div>
+</div>
     <%  } %>
     
     
