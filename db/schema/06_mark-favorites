@@ -1,3 +1,4 @@
+-- SQL Script to Create the 'user_favorites' Table
 
 CREATE TABLE user_favorites (
   user_id INT,
