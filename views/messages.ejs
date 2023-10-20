@@ -37,13 +37,15 @@
     <!-- Main Content Section -->
     <main>
         <!-- Main Title -->
-        <h1>My Messages</h1>
+        <h1 class="text-center">My Messages</h1>
 
         <!-- Display All Messages -->
         <section>
             <h2>Messages</h2>
             <ul>
+
                 <% messages.forEach(message => { %>
+                    <% if (message.sender_id === user.id || message.receiver_id === user.id) { %>
                     <li>
                         <strong>Sender:</strong> <%= message.sender_id %>
                         <br>
@@ -52,9 +54,12 @@
                         <small><strong>Date Sent:</strong> <%= message.date_sent %></small>
                         <strong>Sender:</strong> <%= message.receiver_id %>
                     </li>
-                <% }); %>
+                    <%  } %>
+        
+                    <% }); %>
             </ul>
         </section>
+
 
         <!-- Messaging Form -->
         <section>
@@ -68,6 +73,8 @@
                 </div>
             </form>
         </section>
+
+
     </main>
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

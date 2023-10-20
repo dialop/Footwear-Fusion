@@ -21,7 +21,7 @@ const sendMessage = async(messageDetails) => {
 //Retrieves all messages sorted by the date they were sent (latest first)
 const getAllMessages = async(userId) => {
   try {
-    const result = await db.query('SELECT * FROM messages WHERE sender_id = $1 ORDER BY date_sent DESC;', [userId]);
+    const result = await db.query('SELECT * FROM messages ORDER BY date_sent DESC;');
     console.log('from db: ', userId);
     return result.rows;
   } catch (error) {
