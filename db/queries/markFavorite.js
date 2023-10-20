@@ -11,7 +11,7 @@ const markAsFavorite = (productId) => {
   `, [productId]);
 };
 
-// Function to retrieve products marked as favorites for a user
+// Function to retrieve products marked as favorites for user
 const getFavoritesForUser = async(userId) => {
 
   try {
