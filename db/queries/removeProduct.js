@@ -1,4 +1,4 @@
-// ----  HANDLES QUERY TO REMOVE A PRODUCT  ----//
+// ----  HANDLES DATABASE QUERY TO TO REMOVE PRODUCTS  ----//
 
 const db = require('../connection');
 

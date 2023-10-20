@@ -18,11 +18,10 @@ app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-//Diana
 app.use(cookieSession({
   name: 'session',
-  keys: ['key1', 'key2'],  // You should use environment variables for real-world applications
-  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  keys: ['key1', 'key2'],  
+  maxAge: 24 * 60 * 60 * 1000 
 }));
 
 // Configure SASS middleware

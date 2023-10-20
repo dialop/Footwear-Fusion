@@ -1,3 +1,5 @@
+// ---- REGISTER ROUTER ---- //
+
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
@@ -15,8 +17,6 @@ const { getUserByEmail, addUser } = require('../db/queries/users');
 router.post('/', (req, res) => {
     const { name, email, password } = req.body;
 
-
-    // Check if user already exists
     getUserByEmail(email)
         .then(user => {
             if (user) {

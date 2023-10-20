@@ -1,7 +1,8 @@
-// ---- HANDLES DATABASE QUERIES TO FETCH PRODUCTS OWNED BY A SPECIFIC USER ---- //
+// ---- HANDLES DATABASE QUERY TO FETCH PRODUCTS OWNED BY A SPECIFIC USER ---- //
 
 const db = require('../connection');
 
+// Function to fetch products owned by a specific user
 const getMyProducts = async(userId) => {
   try {
     const result = await db.query('SELECT * FROM products WHERE owner_id = $1;', [userId]);

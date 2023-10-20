@@ -1,4 +1,4 @@
--- DROP and CREATE users TABLE
+-- SQL Script to Drop and Create the 'users' Table
 
 DROP TABLE IF EXISTS users CASCADE;
 CREATE TABLE users (

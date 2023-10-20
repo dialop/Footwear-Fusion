@@ -1,7 +1,10 @@
 // ---- HANDLES DATABASE QUERIES TO FETCH USERS ----//
+
 const db = require('../connection');
 
-const getUsers = async () => {
+
+// Retrieves all users from the database
+const getUsers = async() => {
   try {
     const result = await db.query('SELECT * FROM users;');
     return result.rows;
@@ -10,7 +13,8 @@ const getUsers = async () => {
   }
 };
 
-const getUserByEmail = async (email) => {
+// Retrieves a user by their email from the database
+const getUserByEmail = (email) => {
   return db.query('SELECT * FROM users WHERE email = $1;', [email])
     .then((result) => {
       if (result.rows.length === 0) {
@@ -22,6 +26,8 @@ const getUserByEmail = async (email) => {
       throw new Error(`Failed to fetch user with email ${email}: ${error.message}`);
     });
 };
+
+// Function to add a new user to the database
 
 const addUser = async (name, email, password) => {
   return db.query(`

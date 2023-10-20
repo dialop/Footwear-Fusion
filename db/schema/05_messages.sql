@@ -1,4 +1,4 @@
--- DROP and CREATE messages TABLE
+-- SQL Script to Drop and Create the 'messages' Table
 
 DROP TABLE IF EXISTS messages CASCADE;
 CREATE TABLE messages (

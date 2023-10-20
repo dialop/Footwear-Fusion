@@ -1,4 +1,4 @@
--- DROP and CREATE favorites TABLE
+-- SQL Script to Drop and Create the 'favorites' Table
 
 DROP TABLE IF EXISTS favorites CASCADE;
 CREATE TABLE favorites (

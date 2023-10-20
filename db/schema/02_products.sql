@@ -1,4 +1,4 @@
--- DROP and CREATE products TABLE
+-- SQL Script to Drop and Create the 'products' Table
 
 DROP TABLE IF EXISTS products CASCADE;
 CREATE TABLE products (

@@ -2,6 +2,7 @@
 
 const db = require('../connection');
 
+// Function to fetch all products from the database
 const getAllProducts = () => {
   return db.query('SELECT * FROM products')
     .then((res) => {

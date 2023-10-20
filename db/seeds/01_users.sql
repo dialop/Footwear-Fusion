@@ -1,4 +1,4 @@
---------------------- USERS (NAME, EMAIL AND PASSWORD) TABLE SEEDS ---------------------
+--------------------- SAMPLE USER DATA TABLE ---------------------
 
 INSERT INTO users (name, email, password) 
 VALUES
