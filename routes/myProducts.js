@@ -1,18 +1,15 @@
+// ---- USER PRODUCTS ROUTES ---- //
+
 const express = require('express');
 const router  = express.Router();
-const { getMyProducts  } = require('../db/queries/getMyProducts'); // Import the function
-const { addProduct  } = require('../db/queries/addProduct'); // Import the function
+const { getMyProducts  } = require('../db/queries/getMyProducts'); 
+const { addProduct  } = require('../db/queries/addProduct'); 
 
-
-// ----  ROUTE TO FETCH USERS PRODUCTS ---- //
-//Ichmoukhametov
-
-
+// GET route to fetch user products 
 router.get('/', (req, res) => {
   getMyProducts()
     .then(products => {
-      // console.log('Products:', products);
-      res.render('myProducts', { products }); // Move this line inside the promise callback
+      res.render('myProducts', { products }); 
     })
     .catch((e) => {
       console.error(e);
@@ -20,9 +17,14 @@ router.get('/', (req, res) => {
     });
 });
 
-// ----  ROUTE TO ADD NEW PRODUCT ---- //
+// GET route to fetch user products 
+router.get('/new', (req, res) => {
+  res.render('add-product');
+});
+
+
+// POST route to fetch user products 
 router.post('/new', (req, res) => {
-  //This is just for testing, before we have login
   req.session.user_id = {id : 1};
   
   addProduct(req.body, req.session.user_id.id)
@@ -39,9 +41,5 @@ router.post('/new', (req, res) => {
 });
 
 
-// ----  ROUTE TO DISPLAY ADD PRODUCT PAGE---- //
-router.get('/new', (req, res) => {
-  res.render('add-product');
-});
 
 module.exports = router;
