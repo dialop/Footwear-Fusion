@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Page Title -->
-    <title>My Favorites</title>
+    <title >My Favorites</title>
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
@@ -38,29 +38,29 @@
     </header>      
     <main>
         <!-- Main Heading -->
-        <h1>My Favorites</h1>
+        <h1 class="text-center">My Favorites</h1>
 
         <section>
+            <div class="card-deck">
             <!-- Check if there are any favorites -->
             <% if(favorites.length > 0) { %>
                 <!-- Loop through each product in the favorites list -->
                 <% favorites.forEach(product => { %>
-                    <div class="product">
+                        <div class="card-body text-center">
                         <!-- Display product image -->
                         <img src="<%= product.photo_url %>" alt="Product Image of <%= product.title %>">
                         
                         <!-- Display product details -->
-                        <h2><%= product.title %></h2>
-                        <p><strong>Model:</strong> <%= product.model %></p>
-                        <p><strong>Description:</strong> <%= product.description %></p>
-                        <p><strong>Size:</strong> <%= product.size %></p>
-                        <p><strong>Color:</strong> <%= product.color %></p>
-                        <p><strong>Price:</strong> $<%= product.price %></p>
-                        <p><%= product.id %></p>
+                        <h5><%= product.title %></h5>
+                        <p><%= product.model %></p>
+                        <p><%= product.description %></p>
+                        <p>Size: <%= product.size %></p>
+                        <p>Color: <%= product.color %></p>
+                        <p>$<%= product.price %></p>
 
                         <!-- Delete button -->
                             <form method="POST" action="/favorites/<%= product.id %>/delete">
-                            <button type="submit">Delete</button>
+                            <button class="btn-card btn btn-danger" type="submit">Delete</button>
                         </form>
                     </div>
                 <% }) %>
@@ -68,7 +68,7 @@
                 <!-- Display a message if there are no favorites -->
                 <p>No products have been added to favorites yet.</p>
             <% } %>
-            
+        </div>
         </section>
     </main>
     <!-- Bootstrap JS -->
