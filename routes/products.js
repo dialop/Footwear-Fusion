@@ -42,24 +42,9 @@ router.get('/:id', (req, res) => {
 });
 
 
+
+
 // GET route to display the edit product details page
-router.get('/:id/edit', (req, res) => {
-    const productId = req.params.id;
-    getProductDetail(productId)
-        .then(product => {
-            console.log(product);
-            // Render the product detail using Express and EJS template
-            res.render('edit-product', { product });
-        })
-        .catch(e => {
-            console.error(e);
-            res.send(e);
-        });
-});
-
-
-
-// POST route to update product details
 router.get('/:id/edit', (req, res) => {
     const user = req.session.user;
     const productId = req.params.id;
@@ -76,6 +61,25 @@ router.get('/:id/edit', (req, res) => {
         });
     res.redirect('/myProducts');
 });
+
+
+// ----  ROUTE TO EDIT PRODUCT DETAILS ---- //
+router.post('/:id/edit', (req, res) => {
+    const productId = req.params.id;
+    const { title, model, description, size, color, price, photo_url } = req.body;
+
+    editProduct({ title, model, description, size, color, price, photo_url }, productId)
+        .then(product => {
+            // Render the product detail using Express and EJS template
+            res.json({ product });
+        })
+        .catch(e => {
+            console.error(e);
+            res.send(e);
+        });
+    res.redirect('/myProducts');
+});
+
 
 
 // POST route to delete a product

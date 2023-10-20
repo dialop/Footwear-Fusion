@@ -20,10 +20,6 @@ router.get('/', (req, res) => {
     });
 });
 
-// GET route to display the 'Add Product' page
-router.get('/new', (req, res) => {
-  res.render('add-product');
-});
 
 
 // POST route to add a new product
