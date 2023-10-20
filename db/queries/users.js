@@ -2,13 +2,9 @@
 
 const db = require('../connection');
 
-<<<<<<< HEAD
 
 // Retrieves all users from the database
 const getUsers = async() => {
-=======
-const getUsers = async () => {
->>>>>>> a2edd879383f7cd37b256fa7f66ed7a00bc53e5c
   try {
     const result = await db.query('SELECT * FROM users;');
     return result.rows;
@@ -17,12 +13,8 @@ const getUsers = async () => {
   }
 };
 
-<<<<<<< HEAD
 // Retrieves a user by their email from the database
 const getUserByEmail = (email) => {
-=======
-const getUserByEmail = async (email) => {
->>>>>>> a2edd879383f7cd37b256fa7f66ed7a00bc53e5c
   return db.query('SELECT * FROM users WHERE email = $1;', [email])
     .then((result) => {
       if (result.rows.length === 0) {
@@ -34,8 +26,8 @@ const getUserByEmail = async (email) => {
       throw new Error(`Failed to fetch user with email ${email}: ${error.message}`);
     });
 };
-<<<<<<< HEAD
-=======
+
+// Function to add a new user to the database
 
 const addUser = async (name, email, password) => {
   return db.query(`
@@ -52,6 +44,5 @@ const addUser = async (name, email, password) => {
 }
 
 
->>>>>>> a2edd879383f7cd37b256fa7f66ed7a00bc53e5c
 
 module.exports = { getUsers, getUserByEmail, addUser };
