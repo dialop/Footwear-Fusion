@@ -1,3 +1,5 @@
+// ---- LOGIN ROUTER ---- //
+
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
@@ -5,7 +7,7 @@ const bcrypt = require('bcrypt');
 const { getUserByEmail } = require('../db/queries/users');
 
 
-// Login GET route
+// GET Login route
 router.get('/', (req, res) => {
     const user = req.session.user;
 
@@ -19,7 +21,7 @@ router.post('/logout', (req, res) => {
 
 
 
-// Login POST route
+// POST Login route
 router.post('/', (req, res) => {
     console.log('req.body login:', req.body);
 

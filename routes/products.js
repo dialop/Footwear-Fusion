@@ -11,21 +11,13 @@ const { deleteProduct } = require('../db/queries/deleteProduct');
 const { markAsSold } = require('../db/queries/sold');
 
 
-//GET route to fetch all products 
+// GET route to fetch all products 
 router.get('/', (req, res) => {
-<<<<<<< HEAD
-    getFilteredProducts(req.query)
-        .then(products => {
-            res.render('products', { products });
-=======
     const user = req.session.user;
 
-    // Get products based on the parsed query string from the URL
     getFilteredProducts(req.query)
         .then(products => {
-            // Render the results using Express and EJS template
             res.render('products', { products, user });
->>>>>>> a2edd879383f7cd37b256fa7f66ed7a00bc53e5c
         })
         .catch(err => {
             console.error('Error fetching filtered products:', err);
@@ -33,24 +25,15 @@ router.get('/', (req, res) => {
         });
 });
 
-//GET route to fetch product details
+// GET route to fetch product details
 router.get('/:id', (req, res) => {
-<<<<<<< HEAD
-=======
     const user = req.session.user;
-    // Extract product ID from the request parameters
->>>>>>> a2edd879383f7cd37b256fa7f66ed7a00bc53e5c
     const productId = req.params.id;
     console.log('from product Details:', user, productId);
 
     getProductDetail(productId)
         .then(product => {
-<<<<<<< HEAD
-            res.render('productDetail', { productDetail: product });
-=======
-            // Render the product detail using Express and EJS template
             res.render('productDetail', { productDetail: product, user });
->>>>>>> a2edd879383f7cd37b256fa7f66ed7a00bc53e5c
         })
         .catch(e => {
             console.error(e);
@@ -59,7 +42,7 @@ router.get('/:id', (req, res) => {
 });
 
 
-//GET route to fetch all products 
+// GET route to display the edit product details page
 router.get('/:id/edit', (req, res) => {
     const productId = req.params.id;
     getProductDetail(productId)
@@ -74,28 +57,18 @@ router.get('/:id/edit', (req, res) => {
         });
 });
 
-<<<<<<< HEAD
-//POST route to edit product details
-router.post('/:id/edit', (req, res) => {
-=======
 
 
-// ----  ROUTE TO DISPLAY EDIT PRODUCT DETAILS PAGE---- //
+// POST route to update product details
 router.get('/:id/edit', (req, res) => {
     const user = req.session.user;
->>>>>>> a2edd879383f7cd37b256fa7f66ed7a00bc53e5c
     const productId = req.params.id;
     const { title, model, description, size, color, price, photo_url } = req.body;
 
     editProduct({ title, model, description, size, color, price, photo_url }, productId)
         .then(product => {
-<<<<<<< HEAD
-            res.json({ product });
-=======
             console.log(product);
-            // Render the product detail using Express and EJS template
             res.render('edit-product', { product, user });
->>>>>>> a2edd879383f7cd37b256fa7f66ed7a00bc53e5c
         })
         .catch(e => {
             console.error(e);
@@ -105,8 +78,7 @@ router.get('/:id/edit', (req, res) => {
 });
 
 
-
-//GET route to fetch all products 
+// POST route to delete a product
 router.post('/:id/delete', (req, res) => {
     const productId = req.params.id;
 
@@ -119,9 +91,7 @@ router.post('/:id/delete', (req, res) => {
 });
 
 
-<<<<<<< HEAD
-=======
-// ----  ROUTE TO MARK PRODUCT AS SOLD ---- //
+// POST route to mark a product as sold
 router.post('/:id/sold', (req, res) => {
     const productId = req.params.id;
 
@@ -134,6 +104,4 @@ router.post('/:id/sold', (req, res) => {
 });
 
 
-// Export the router for use in the main application
->>>>>>> a2edd879383f7cd37b256fa7f66ed7a00bc53e5c
 module.exports = router;
