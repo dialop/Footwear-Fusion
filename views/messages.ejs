@@ -47,12 +47,12 @@
                 <% messages.forEach(message => { %>
                     <% if (message.sender_id === user.id || message.receiver_id === user.id) { %>
                     <li>
-                        <strong>Sender:</strong> <%= message.sender_id %>
+                        <strong>Sent by:</strong> <%= message.sender_id %>
                         <br>
                         <strong>Message:</strong> <%= message.message %>
                         <br>
                         <small><strong>Date Sent:</strong> <%= message.date_sent %></small>
-                        <strong>Sender:</strong> <%= message.receiver_id %>
+                        <strong>Received by:</strong> <%= message.receiver_id %>
                     </li>
                     <%  } %>
         
