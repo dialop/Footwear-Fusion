@@ -35,20 +35,27 @@
         <h1>My Messages</h1>
 
         <!-- Display All Messages -->
-        <section>
-            <h2>Messages</h2>
-            <ul>
-                <% messages.forEach(message => { %>
-                    <li>
-                        <strong>Sender:</strong> <%= message.sender_id %>
-                        <br>
-                        <strong>Message:</strong> <%= message.message %>
-                        <br>
-                        <small><strong>Date Sent:</strong> <%= message.date_sent %></small>
-                    </li>
-                <% }); %>
-            </ul>
-        </section>
+       <!-- Display All Messages -->
+<section>
+    <h2>Messages</h2>
+    <ul>
+        <% messages.forEach(message => { %>
+            <li>
+                <strong>Sender:</strong> <%= message.sender_id %>
+                <br>
+                <strong>Message:</strong> <%= message.message %>
+                <br>
+                <small><strong>Date Sent:</strong> <%= message.date_sent %></small>
+
+                <!-- Delete button for messages -->
+                <form method="POST" action="/messages/<%= message.id %>/delete">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        <% }); %>
+    </ul>
+</section>
+
 
         <!-- Messaging Form -->
         <section>
@@ -66,6 +73,3 @@
 </body>
 
 </html>
-
-
-
