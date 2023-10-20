@@ -36,32 +36,48 @@
 
     <!-- Main Content Section -->
     <main>
-        <!-- Main Title -->
-        <h1 class="text-center">My Messages</h1>
+        <div class="container">
+            <!-- Main Title -->
+            <h1 class="text-center">My Messages</h1>
 
-        <!-- Display All Messages -->
-        <section>
-            <h2>Messages</h2>
-            <ul>
+            <!-- Display Messages for yser if he is sender or receiver -->
+            <section>
+                <ul>
+                    <% messages.forEach(message=> { %>
+                        <% if (message.sender_id===user.id || message.receiver_id===user.id) { %>
+                            <li>
+                                <div class="row featurette custom-gap mb-3 mt-3">
+                                    <div class="order-md-1">
+                                        <img src="<%= message.product_photo %>" alt="" width="100px">
+                                    </div>
+                                    <div class="col-md-7 order-md-2">
+                                        <strong>Product:</strong>
+                                        <%= message.product_title %>
+                                            <br>
+                                            <strong>From:</strong>
+                                            <%= message.sender_name %>
+                                                <br>
+                                                <strong>To:</strong>
+                                                <%= message.receiver_name %>
+                                                    <br>
+                                                    <strong>Message:</strong>
+                                                    <%= message.message %>
+                                                        <br>
+                                                        <small><strong>Date Sent:</strong>
+                                                            <%= message.date_sent %>
+                                                        </small>
 
-                <% messages.forEach(message => { %>
-                    <% if (message.sender_id === user.id || message.receiver_id === user.id) { %>
-                    <li>
-                        <strong>Sent by:</strong> <%= message.sender_id %>
-                        <br>
-                        <strong>Message:</strong> <%= message.message %>
-                        <br>
-                        <small><strong>Date Sent:</strong> <%= message.date_sent %></small>
-                        <strong>Received by:</strong> <%= message.receiver_id %>
-                    </li>
-                    <%  } %>
-        
-                    <% }); %>
-            </ul>
+                            </li>
+                            <% } %>
+
+                                <% }); %>
+
+        </div>
+        </ul>
         </section>
 
 
-        <!-- Messaging Form -->
+        <!-- Messaging Form
         <section>
             <form action="/send-message" method="POST">
                 <div>
@@ -69,12 +85,11 @@
                     <textarea name="message" required></textarea>
                 </div>
                 <div>
-                    <button type="submit">Send Message</button>
+                    <button class="btn-card btn btn-primary" type="submit">Send Message</button>
                 </div>
             </form>
-        </section>
-
-
+        </section> -->
+        </div>
     </main>
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -89,6 +104,3 @@
 </body>
 
 </html>
-
-
-

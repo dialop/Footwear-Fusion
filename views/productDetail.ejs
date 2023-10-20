@@ -26,7 +26,9 @@
 
 
     <!-- Font Awesome library for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- JavaScript -->
     <script src="/vendor/jquery-3.0.0.js"></script>
@@ -38,60 +40,68 @@
     <header>
         <%- include('partials/_header') %>
     </header>
-<main>
-    <div class="container">
-    <!-- Product Details -->
-    <h1 class="text-center mb-5"><%= productDetail.title %></h1>
-    <div class="row featurette custom-gap">
+    <main>
+        <div class="container">
+            <!-- Product Details -->
+            <h1 class="text-center mb-5">
+                <%= productDetail.title %>
+            </h1>
+            <div class="row featurette custom-gap">
 
-        <div class="order-md-1">
-        <img src="<%= productDetail.photo_url %>" alt="Image of <%= productDetail.title %>">
-    </div>
-    <div class="col-md-5 order-md-2">
+                <div class="order-md-1">
+                    <img src="<%= productDetail.photo_url %>" alt="Image of <%= productDetail.title %>">
+                </div>
+                <div class="col-md-5 order-md-2">
 
-        <p><strong>Model</strong>: <%= productDetail.model %></p>
-        <p><strong>Description</strong>: <%= productDetail.description %></p>
-        <p><strong>Size</strong>: <%= productDetail.size %></p>
-        <p><strong>Color</strong>: <%= productDetail.color %></p>
-        <p><strong>Price</strong>: $<%= productDetail.price %></p>
+                    <p><strong>Model</strong>: <%= productDetail.model %>
+                    </p>
+                    <p><strong>Description</strong>: <%= productDetail.description %>
+                    </p>
+                    <p><strong>Size</strong>: <%= productDetail.size %>
+                    </p>
+                    <p><strong>Color</strong>: <%= productDetail.color %>
+                    </p>
+                    <p><strong>Price</strong>: $<%= productDetail.price %>
+                    </p>
 
+                    <!-- Display Like button and allow to send message if user is logged in and if product doesn't belong to user -->
+                    <% if (user && productDetail.owner_id !==user.id) { %>
+                        <!-- Favorite icon -->
+                        <form action="/favorites" method="POST">
+                            <input type="hidden" name="id" value="<%= productDetail.id %>">
+                            <div class="item">
+                                <button class="btn btn-lg" type="submit">❤️</button>
+                            </div>
+                        </form>
 
-    <% if (user && productDetail.owner_id !== user.id) { %>
-        <!-- Favorite icon -->
-        <form action="/favorites" method="POST">
-            <input type="hidden" name="id" value="<%= productDetail.id %>"> 
-            <div class="item">
-                <button class="btn btn-lg" type="submit">❤️</button> 
-              </div>
-          </form>
-          
-        <!-- Message form -->
-        <form action="/send-message" method="POST">
-            <input type="hidden" name="receiver_id" value="<%= productDetail.owner_id %>">
-            <input type="hidden" name="product_id" value="<%= productDetail.id %>"> 
-            <div class="form-floating">
-            <textarea class="form-control"  type="text" name="message" placeholder="Type your message here..."></textarea>
+                        <!-- Message form -->
+                        <form action="/send-message" method="POST">
+                            <input type="hidden" name="receiver_id" value="<%= productDetail.owner_id %>">
+                            <input type="hidden" name="product_id" value="<%= productDetail.id %>">
+                            <div class="form-floating">
+                                <textarea class="form-control" type="text" name="message"
+                                    placeholder="Type your message here..."></textarea>
+                            </div>
+                            <br>
+                            <button class="btn-card btn btn-primary" type="submit">Send message</button>
+                        </form>
+                </div>
+            </div>
         </div>
-            <br>       
-            <button class="btn-card btn btn-primary" type="submit">Send message</button>
-        </form>
-    </div>
-    </div>
-</div>
-    <%  } %>
-    
-    
-</main>
-<!-- Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-crossorigin="anonymous"></script>
+        <% } %>
+
+
+    </main>
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

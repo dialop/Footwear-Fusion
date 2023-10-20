@@ -21,8 +21,14 @@ const sendMessage = async(messageDetails) => {
 //Retrieves all messages sorted by the date they were sent (latest first)
 const getAllMessages = async(userId) => {
   try {
-    const result = await db.query('SELECT * FROM messages ORDER BY date_sent DESC;');
+    const result = await db.query(`
+    SELECT messages.*, products.title AS product_title, products.photo_url AS product_photo, users_sender.name AS sender_name, users_receiver.name AS receiver_name FROM messages 
+    JOIN products ON messages.product_id = products.id 
+    JOIN users AS users_sender ON messages.sender_id = users_sender.id 
+    JOIN users AS users_receiver ON messages.receiver_id = users_receiver.id 
+    ORDER BY messages.date_sent DESC;`);
     console.log('from db: ', userId);
+
     return result.rows;
   } catch (error) {
     throw new Error(`Failed to retrieve messages: ${error.message}`);

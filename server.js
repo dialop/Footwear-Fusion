@@ -135,7 +135,6 @@ app.post('/favorites', async(req, res) => {
 app.get('/messages', async(req, res) => {
   const user = req.session.user;
   const { receiver_id, product_id, message } = req.body;
-  console.log('This is from get', req.body);
   try {
     const messages = await getAllMessages(user.id);
     res.render('messages', { messages: messages, user});
@@ -148,8 +147,6 @@ app.get('/messages', async(req, res) => {
 app.post('/send-message', async(req, res) => {
   const { receiver_id, product_id, message } = req.body;
   const sender_id = req.session.user.id;
-
-  console.log('from post', sender_id, receiver_id, req.body);
 
   try {
     await sendMessage({ sender_id, receiver_id, product_id, message });
