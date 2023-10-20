@@ -6,6 +6,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Add product</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
   <link rel="stylesheet" href="/vendor/border-box.css" />
@@ -16,7 +19,7 @@
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-  integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous" />
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous" />
 
 
 
@@ -35,55 +38,55 @@
   <header>
     <%- include('partials/_header') %>
   </header>
-<main>
-  <div class="mx-auto" style="max-width: 400px;">
-  <h1 class="text-center">Add New Product</h1>
-  <div class="card-body text-center">
-    <form action="/myProducts/new" method="POST">
-      <div class="input-group">
-        <span class="input-group-text">Title</span>
-        <input class="form-control" type="text" name="title" placeholder="Title" required>
+  <main>
+    <div class="mx-auto" style="max-width: 400px;">
+      <h1 class="text-center">Add New Product</h1>
+      <div class="card-body text-center">
+        <form action="/myProducts/new" method="POST">
+          <div class="input-group">
+            <span class="input-group-text">Title</span>
+            <input class="form-control" type="text" name="title" placeholder="Title" required>
+          </div>
+          <div class="input-group">
+            <span class="input-group-text">Model</span>
+            <input class="form-control" type="text" name="model" placeholder="Model">
+          </div>
+          <div class="input-group">
+            <span class="input-group-text">Description</span>
+            <input class="form-control" type="text" name="description" placeholder="Description">
+          </div>
+          <div class="input-group">
+            <span class="input-group-text">Size</span>
+            <input class="form-control" type="number" name="size" placeholder="Size" required>
+          </div>
+          <div class="input-group">
+            <span class="input-group-text">Color</span>
+            <input class="form-control" type="text" name="color" placeholder="Color">
+          </div>
+          <div class="input-group">
+            <span class="input-group-text">Price</span>
+            <input class="form-control" type="number" name="price" placeholder="Price" required>
+          </div>
+          <div class="input-group">
+            <span class="input-group-text">Photo_url</span>
+            <input class="form-control" type="text" name="photo_url" placeholder="Photo_url" required>
+          </div>
+          <br>
+          <button class="btn-card btn btn-primary" type="submit">Add product</button>
+        </form>
       </div>
-      <div class="input-group">
-        <span class="input-group-text">Model</span>
-        <input class="form-control" type="text" name="model" placeholder="Model">
-      </div>
-      <div class="input-group">
-        <span class="input-group-text">Description</span>
-        <input class="form-control" type="text" name="description" placeholder="Description">
-      </div>
-      <div class="input-group">
-        <span class="input-group-text">Size</span>
-        <input class="form-control" type="number" name="size" placeholder="Size" required>
-      </div>
-      <div class="input-group">
-        <span class="input-group-text">Color</span>
-        <input class="form-control" type="text" name="color" placeholder="Color">
-      </div>
-      <div class="input-group">
-        <span class="input-group-text">Price</span>
-        <input class="form-control" type="number" name="price" placeholder="Price" required>
-      </div>
-      <div class="input-group">
-        <span class="input-group-text">Photo_url</span>
-        <input class="form-control" type="text" name="photo_url" placeholder="Photo_url" required>
-      </div>
-      <br>
-      <button class="btn-card btn btn-primary" type="submit">Add product</button>
-    </form>
-  </div>
-  </div>
-</main>
-<!-- Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-crossorigin="anonymous"></script>
+    </div>
+  </main>
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>

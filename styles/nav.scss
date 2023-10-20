@@ -1,18 +1,18 @@
 .navbar {
-  font-family: 'Poppins', sans-serif;
   padding: 10px;
   font-size: 18px;
+  background-color: #efebea;
 }
 
 .nav-item {
   padding: 12px;
   color: black;
+  font-family: 'Poppins', sans-serif;
 }
 
-.nav-end{
+.nav-end {
   display: flex;
   justify-content: center;
-
 }
 
 .nav-btn {

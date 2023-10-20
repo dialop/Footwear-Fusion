@@ -13,6 +13,9 @@
 
     <!-- Page Title -->
     <title>All products</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins&display=swap" rel="stylesheet">
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
@@ -37,84 +40,88 @@
         <!-- Including Header Partial -->
         <%- include('partials/_header') %>
     </header>
-<main>
-    <!-- Main Title -->
-    <h1 class="text-center">All products</h1>
+    <main>
+        <!-- Main Title -->
+        <h1 class="text-center">All products</h1>
 
-    <div class="container">
-        <h3 >Filter</h3>
-        <form method="GET" action="/products">
-            <div class="row">
-                <!-- Search by Title -->
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="filter-title">Title:</label>
-                        <input type="text" class="form-control" name="title" placeholder="Title" id="filter-title">
+        <div class="container">
+            <h3>Filter</h3>
+            <form method="GET" action="/products">
+                <div class="row">
+                    <!-- Search by Title -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="filter-title">Title:</label>
+                            <input type="text" class="form-control" name="title" placeholder="Title" id="filter-title">
+                        </div>
                     </div>
-                </div>
-    
-                <!-- Filter by Size -->
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="filter-size">Size:</label>
-                        <input type="number" class="form-control" name="size" id="filter-size">
-                    </div>
-                </div>
-    
-                <!-- Search by Price Range -->
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label for="filter-minimum-price">Min price $: </label>
-                        <input type="number" class="form-control" name="minimumPrice" placeholder="Minimum" id="filter-minimum-price">
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label for="filter-minimum-price">Max price $:</label>
-                        <input type="number" class="form-control" name="maximumPrice" placeholder="Maximum" id="filter-maximum-price">
-                    </div>
-                </div>
-            </div>
-    
-            <!-- Submit Button -->
-            <div class="row">
-                <div class="col-md-12">
-                    <button class="btn btn-primary" type="submit">Search</button>
-                </div>
-            </div>
-        </form>
-    </div>
-    
-    <!-- Placeholder for Search Results -->
-    <div id="search-result">
-        <!-- Content will be populated upon search -->
-    </div>
 
-    <!-- All Products Display Section -->
-    <div id="all-products" class="card-deck">
-        <!-- Loop through and display each product -->
-        <% products.forEach(product => { %>
-        <div class="card-body text-center">
-            <a href="/products/<%= product.id %>">
-                <img src="<%= product.photo_url %>" alt="<%= product.title %>">
-            </a>
-            <h5 class="card-title" ><%= product.title %></h5>
-            <p class="card-text">$<%= product.price %></p>
+                    <!-- Filter by Size -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="filter-size">Size:</label>
+                            <input type="number" class="form-control" name="size" id="filter-size">
+                        </div>
+                    </div>
+
+                    <!-- Search by Price Range -->
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="filter-minimum-price">Min price $: </label>
+                            <input type="number" class="form-control" name="minimumPrice" placeholder="Minimum"
+                                id="filter-minimum-price">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="filter-minimum-price">Max price $:</label>
+                            <input type="number" class="form-control" name="maximumPrice" placeholder="Maximum"
+                                id="filter-maximum-price">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </div>
+                </div>
+            </form>
         </div>
-        <% }); %>
-    </div>
-</main>
-<!-- Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-crossorigin="anonymous"></script>
+
+        <!-- Placeholder for Search Results -->
+        <div id="search-result">
+            <!-- Content will be populated upon search -->
+        </div>
+
+        <!-- All Products Display Section -->
+        <div id="all-products" class="card-deck">
+            <!-- Loop through and display each product -->
+            <% products.forEach(product=> { %>
+                <div class="card-body text-center">
+                    <a href="/products/<%= product.id %>">
+                        <img src="<%= product.photo_url %>" alt="<%= product.title %>">
+                    </a>
+                    <h5 class="card-title">
+                        <%= product.title %>
+                    </h5>
+                    <p class="card-text">$<%= product.price %>
+                    </p>
+                </div>
+                <% }); %>
+        </div>
+    </main>
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
-

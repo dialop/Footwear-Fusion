@@ -2,47 +2,53 @@
 
 <!DOCTYPE html>
 <html>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins&display=swap" rel="stylesheet">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous" />
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous" />
 
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css">
-    <link rel="stylesheet" href="/vendor/border-box.css">
-    <link rel="stylesheet" href="/styles/layout.css">
-    <link rel="stylesheet" href="/styles/nav.css">
+<!-- Stylesheets -->
+<link rel="stylesheet" href="/vendor/normalize-4.1.1.css">
+<link rel="stylesheet" href="/vendor/border-box.css">
+<link rel="stylesheet" href="/styles/layout.css">
+<link rel="stylesheet" href="/styles/nav.css">
 
 
-    <!-- JavaScript -->
-    <script src="/vendor/jquery-3.0.0.js"></script>
-    <script defer src="/scripts/app.js"></script>
-    <body>
-        <header>
-            <%- include('partials/_header') %>
-          </header>
-<main>
-    <div class="mx-auto" style="max-width: 400px;">
-        <h1 class="text-center">Create account</h1>
-        <div class="card-body text-center">
-        <form method="POST" action="/register">
-            <label for="name">Username:</label>
-            <input class="form-control" type="name" id="name" name="name" placeholder="Username" required>
-            <label for="email">Email:</label>
-            <input class="form-control" type="email" id="email" name="email" placeholder="email" required>
-            <label for="password">Password:</label>
-            <input class="form-control" type="password" id="password" name="password" placeholder="Password" required>
-            <label for="confirm-password">Confirm Password:</label>
-            <input class="form-control" type="password" id="confirm-password" name="Confirm-password" placeholder="Confirm password" required>
-            <br>
-            <button class="btn-card btn btn-primary" type="submit">Sign Up</button>
-        </form>
-    </div>
-</div>
+<!-- JavaScript -->
+<script src="/vendor/jquery-3.0.0.js"></script>
+<script defer src="/scripts/app.js"></script>
+
+<body>
+    <header>
+        <%- include('partials/_header') %>
+    </header>
+    <main>
+        <div class="mx-auto" style="max-width: 400px;">
+            <h1 class="text-center">Create account</h1>
+            <div class="card-body text-center">
+                <form method="POST" action="/register">
+                    <label for="name">Username:</label>
+                    <input class="form-control" type="name" id="name" name="name" placeholder="Username" required>
+                    <label for="email">Email:</label>
+                    <input class="form-control" type="email" id="email" name="email" placeholder="email" required>
+                    <label for="password">Password:</label>
+                    <input class="form-control" type="password" id="password" name="password" placeholder="Password"
+                        required>
+                    <label for="confirm-password">Confirm Password:</label>
+                    <input class="form-control" type="password" id="confirm-password" name="Confirm-password"
+                        placeholder="Confirm password" required>
+                    <br>
+                    <button class="btn-card btn btn-primary" type="submit">Sign Up</button>
+                </form>
+            </div>
+        </div>
     </main>
 
     <!-- Bootstrap JS -->
@@ -55,5 +61,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-    </body>
+</body>
+
 </html>

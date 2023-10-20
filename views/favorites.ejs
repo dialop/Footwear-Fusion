@@ -11,8 +11,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
     <!-- Page Title -->
-    <title >My Favorites</title>
+    <title>My Favorites</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins&display=swap" rel="stylesheet">
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
@@ -35,40 +39,49 @@
     <header>
         <!-- Including Header Partial -->
         <%- include('partials/_header') %>
-    </header>      
+    </header>
     <main>
         <!-- Main Heading -->
         <h1 class="text-center">My Favorites</h1>
 
         <section>
             <div class="card-deck">
-            <!-- Check if there are any favorites -->
-            <% if(favorites.length > 0) { %>
-                <!-- Loop through each product in the favorites list -->
-                <% favorites.forEach(product => { %>
+                <!-- Check if there are any favorites -->
+                <% if(favorites.length> 0) { %>
+                    <!-- Loop through each product in the favorites list -->
+                    <% favorites.forEach(product=> { %>
                         <div class="card-body text-center">
-                        <!-- Display product image -->
-                        <img src="<%= product.photo_url %>" alt="Product Image of <%= product.title %>">
-                        
-                        <!-- Display product details -->
-                        <h5><%= product.title %></h5>
-                        <p><%= product.model %></p>
-                        <p><%= product.description %></p>
-                        <p>Size: <%= product.size %></p>
-                        <p>Color: <%= product.color %></p>
-                        <p>$<%= product.price %></p>
+                            <!-- Display product image -->
+                            <img src="<%= product.photo_url %>" alt="Product Image of <%= product.title %>">
 
-                        <!-- Delete button -->
+                            <!-- Display product details -->
+                            <h5>
+                                <%= product.title %>
+                            </h5>
+                            <p>
+                                <%= product.model %>
+                            </p>
+                            <p>
+                                <%= product.description %>
+                            </p>
+                            <p>Size: <%= product.size %>
+                            </p>
+                            <p>Color: <%= product.color %>
+                            </p>
+                            <p>$<%= product.price %>
+                            </p>
+
+                            <!-- Delete button -->
                             <form method="POST" action="/favorites/<%= product.id %>/delete">
-                            <button class="btn-card btn btn-danger" type="submit">Delete</button>
-                        </form>
-                    </div>
-                <% }) %>
-            <% } else { %>
-                <!-- Display a message if there are no favorites -->
-                <p>No products have been added to favorites yet.</p>
-            <% } %>
-        </div>
+                                <button class="btn-card btn btn-danger" type="submit">Delete</button>
+                            </form>
+                        </div>
+                        <% }) %>
+                            <% } else { %>
+                                <!-- Display a message if there are no favorites -->
+                                <p>No products have been added to favorites yet.</p>
+                                <% } %>
+            </div>
         </section>
     </main>
     <!-- Bootstrap JS -->
@@ -82,4 +95,5 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 </body>
+
 </html>
