@@ -1,4 +1,4 @@
---------------------- PRODUCTS TABLE SEEDS ---------------------
+--------------------- SAMPLE PRODUCTS DATA TABLE  ---------------------
 
 INSERT INTO products (title, model, description, size, color, price, owner_id, photo_url) 
 VALUES

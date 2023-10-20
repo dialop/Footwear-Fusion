@@ -1,4 +1,4 @@
---------------------- MESSAGES TABLE SEEDS ---------------------
+--------------------- SAMPLE MESSAGES DATA TABLE  ---------------------
 
 INSERT INTO messages
 (sender_id, receiver_id, product_id, message, date_sent) 

@@ -1,4 +1,4 @@
---------------------- FAVORITES TABLE SEEDS ---------------------
+--------------------- FAVORITES DATA TABLE ---------------------
 
 INSERT INTO favorites (user_id, product_id, products) 
 VALUES 
