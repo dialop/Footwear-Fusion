@@ -1,8 +1,8 @@
-
-// ---- HANDLE FUNCTIONS TO FILTER PRODUCTS ---- //
+// ---- HANDLE DATABASE QUERIES TO FILTER PRODUCTS ---- //
 
 const db = require('../connection');
 
+// Function to filter products based on user-provided criteria
 const getFilteredProducts = (products, limit = 10) => {
   const queryParams = [];
 
@@ -42,7 +42,6 @@ const getFilteredProducts = (products, limit = 10) => {
       queryString += ` AND price <= $${queryParams.length}`;
     }
   }
-  
 
   // Group the results by product ID
   queryString += `
@@ -70,6 +69,5 @@ const getFilteredProducts = (products, limit = 10) => {
       throw err;
     });
 };
-
 
 module.exports = { getFilteredProducts };

@@ -1,8 +1,8 @@
-// ----  HANDLES QUERY TO MARK PRODUCT AS SOLD  ----//
+// ----  HANDLES DATABASE QUERY TO MARK PRODUCT AS SOLD  ----//
 
 const db = require('../connection');
 
-
+// Marks a product as sold 
 const markAsSold = async(productId) => {
   try {
     const result = await db.query('UPDATE products SET is_sold = true WHERE id = $1 RETURNING *;', [productId]);

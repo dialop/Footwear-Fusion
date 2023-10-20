@@ -1,8 +1,8 @@
-// ----  HANDLES QUERY TO MARK FAVORITE PRODUCTS ---- //
+// ----  HANDLES DATABASE QUERIES TO MARK FAVORITE PRODUCTS ---- //
 
-const { query } = require('express');
 const db = require('../connection');
 
+// Function to mark a product as a favorite for a user
 const markAsFavorite = (productId) => {
   return db.query(`
     INSERT INTO user_favorites (user_id, product_id)
@@ -11,15 +11,12 @@ const markAsFavorite = (productId) => {
   `, [productId]);
 };
 
-
-//-- ACCESS USER PRODUCTS THAT HAVE BEEN MARKED AS FAVORITE --//
-
-
+// Function to retrieve products marked as favorites for a user
 const getFavoritesForUser = async() => {
   const hardcodedUserId = 2;  // Hardcoded user id
 
   try {
-      const result = await db.query(`
+    const result = await db.query(`
       SELECT 
       p.id,
       p.title,
@@ -37,21 +34,21 @@ const getFavoritesForUser = async() => {
   WHERE 
       f.user_id = $1;
 `, [hardcodedUserId]);
-      return result.rows;
+    return result.rows;
   } catch (error) {
-      throw new Error(`Error retrieving favorites for user with ID ${hardcodedUserId}: ${error.message}`);
+    throw new Error(`Error retrieving favorites for user with ID ${hardcodedUserId}: ${error.message}`);
   }
 };
 
-
+// Function to delete a product from favorites
 function deleteFavorite(productId) {
-  // Logic to remove the product with productId from the favorites table
+
   return new Promise((resolve, reject) => {
-      // Example with a hypothetical DB library:
-      db.query("DELETE FROM favorites WHERE product_id = ?", [productId], function(err, results) {
-          if (err) return reject(err);
-          resolve(results);
-      });
+    db.query("DELETE FROM favorites WHERE product_id = ?", [productId], function(err, results) {
+      
+      if (err) return reject(err);
+      resolve(results);
+    });
   });
 }
 
