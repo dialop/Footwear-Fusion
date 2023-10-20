@@ -35,6 +35,12 @@ app.use(
     isSass: false, // false => scss, true => sass
   })
 );
+app.use(express.static('public'));
+
+
+// Separated Routes for each Resource
+// Note: Feel free to replace the example routes below with your own
+
 
 
 // Routes
@@ -42,7 +48,10 @@ const userApiRoutes = require('./routes/users-api');
 const widgetApiRoutes = require('./routes/widgets-api');
 const usersRoutes = require('./routes/users');
 const productsRoutes = require('./routes/products');
+const loginRouter = require('./routes/login');
+const favoritesRouter = require('./routes/favorites');
 const myProductsRoutes = require('./routes/myProducts');
+const registerRoutes = require('./routes/register');
 const { getFilteredProducts } = require('./db/queries/filterProducts');
 const { sendMessage, getAllMessages } = require('./db/queries/messages');
 const { getFavoritesForUser } = require('./db/queries/markFavorite');
@@ -54,23 +63,28 @@ app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
 app.use('/products', productsRoutes);
+app.use('/login', loginRouter);
 app.use('/myProducts', myProductsRoutes);
+app.use('/register', registerRoutes);
 
 
-//-- GET ENDPOINT USER FAVORITE PRODUCTS --//
+// -- GET ENDPOINT USER FAVORITE PRODUCTS --//
 app.get('/favorites', async(req, res) => {
+  const user = req.session.user;
   try {
-    let favorites = await getFavoritesForUser();
+    let favorites = await getFavoritesForUser(user.id);
     // Filter out products with null descriptions
     favorites = favorites.filter(product => product.description !== null);
     res.render('favorites', {
-      favorites: favorites
+      favorites: favorites, 
+      user: user
     });
   } catch (error) {
     console.error(error);
     res.status(500).send(`Server error: ${error.message}`);
   }
 });
+
 
 //-- POST ENDPOINT DELETE PRODUCTS --//
 app.post('/favorites/:id/delete', (req, res) => {
@@ -79,7 +93,8 @@ app.post('/favorites/:id/delete', (req, res) => {
   deleteFavorite(productId)
     .then(() => {
       // Send a response indicating success
-      res.status(200).json({ message: 'Favorite deleted successfully' });
+      // res.status(200).json({ message: 'Favorite deleted successfully' });
+      res.redirect('/favorites');
     })
     .catch((error) => {
       // Handle any errors that occur during deletion
@@ -89,12 +104,13 @@ app.post('/favorites/:id/delete', (req, res) => {
 });
 
 
-//-- GET ENDPOINT ADDING FAVORITE PRODUCTS --//
+// -- GET ENDPOINT ADDING FAVORITE PRODUCTS --//
 app.get('/favorites', async(req, res) => {
+  const user = req.session.user;
+
   try {
-    const userId = req.session.user_id || null;
-    const favorites = await getFavoritesForUser(userId);
-    res.render('favorites', { favorites: favorites });
+    const favorites = await getFavoritesForUser(user.id);
+    res.render('favorites', { favorites: favorites, user: user.id });
   } catch (error) {
     console.error(error);
     res.status(500).send('Server Error');
@@ -104,10 +120,10 @@ app.get('/favorites', async(req, res) => {
 //-- POST ENDPOINT ADDING FAVORITE PRODUCTS --//
 app.post('/favorites', async(req, res) => {
   const productId = req.body.id;
-  const userId = 2; //  hardcoded ID value
+  const user = req.session.user;
 
   try {
-    await addToFavorites(productId, userId);
+    await addToFavorites(productId, user.id);
     res.redirect('/favorites');
   } catch (error) {
     console.error('Error adding product to favorites:', error);
@@ -117,9 +133,12 @@ app.post('/favorites', async(req, res) => {
 
 // -- GET ENDPOINT SEND MESSAGES -- //
 app.get('/messages', async(req, res) => {
+  const user = req.session.user;
+  const { receiver_id, product_id, message } = req.body;
+  console.log('This is from get', req.body);
   try {
-    const messages = await getAllMessages();
-    res.render('messages', { messages: messages });
+    const messages = await getAllMessages(user.id);
+    res.render('messages', { messages: messages, user});
   } catch (error) {
     res.status(500).send('Error retrieving messages');
   }
@@ -127,7 +146,10 @@ app.get('/messages', async(req, res) => {
 
 // -- POST ENDPOINT SEND MESSAGES -- //
 app.post('/send-message', async(req, res) => {
-  const { sender_id, receiver_id, product_id, message } = req.body;
+  const { receiver_id, product_id, message } = req.body;
+  const sender_id = req.session.user.id;
+
+  console.log('from post', sender_id, receiver_id, req.body);
 
   try {
     await sendMessage({ sender_id, receiver_id, product_id, message });
@@ -158,78 +180,10 @@ app.get('/filterProducts', (req, res) => {
 
 // Home page
 app.get('/', (req, res) => {
-  res.render('index');
+  const user = req.session.user;
+  res.render('index', { user });
 });
 
-//Diana L
-//Login POST Endpoint
-app.post('/login', async(req, res) => {
-  const { email, password } = req.body;
-
-  try {
-    // Fetch the user by email from the database
-    const user = await getUserByEmail(email);
-
-    if (user) {
-      // Compare the hashed password stored in the database with the password provided by the user
-      if (bcrypt.compareSync(password, user.password)) {
-        // Store user id in the session
-        req.session.user_id = user.id;
-        res.redirect('/');
-      } else {
-        res.status(403).send('Invalid password');
-      }
-    } else {
-      res.status(403).send('User not found');
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
-  }
-});
-
-//Diana L
-// Register GET Endpoint
-app.get('/register', (req, res) => {
-  res.render('register');
-});
-
-// Register POST Endpoint
-app.post('/register', async(req, res) => {
-  const { name, email, password } = req.body;
-
-  if (!name || !email || !password) {
-    return res.status(400).send('Please fill out all fields');
-  }
-
-  if (await getUserByEmail(email)) {
-    return res.status(400).send('User already exists');
-  }
-
-  const id = generateRandomString();
-  const user = {name, email, password};
-
-  await db.query('INSERT INTO users (id, name, email, password) VALUES ($1, $2, $3, $4)', [name, email, password]);
-
-  req.session.user_id = id;
-  res.redirect('/');
-});
-
-// Logout POST Endpoint
-app.post('/logout', (req, res) => {
-  req.session = null;
-  res.redirect('/');
-});
-
-// Helper functions
-const generateRandomString = function() {
-  return Math.random().toString(36).substring(2, 8);
-};
-
-// Diana L
-const getUserByEmail = (email, users) => {
-  return users.find((user) => user.email === email) || null;
-};
 
 
 // Server
