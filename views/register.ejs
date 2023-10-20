@@ -14,7 +14,6 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css">
     <link rel="stylesheet" href="/vendor/border-box.css">
-    <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/layout.css">
     <link rel="stylesheet" href="/styles/nav.css">
 
@@ -27,22 +26,23 @@
             <%- include('partials/_header') %>
           </header>
 <main>
-        <h1>Sign Up</h1>
+    <div class="mx-auto" style="max-width: 400px;">
+        <h1 class="text-center">Create account</h1>
+        <div class="card-body text-center">
         <form method="POST" action="/register">
-            <label for="name">Username</label>
-            <input type="name" id="name" name="name" required>
-            <br>
+            <label for="name">Username:</label>
+            <input class="form-control" type="name" id="name" name="name" placeholder="Username" required>
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            <br>
+            <input class="form-control" type="email" id="email" name="email" placeholder="email" required>
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            <br>
+            <input class="form-control" type="password" id="password" name="password" placeholder="Password" required>
             <label for="confirm-password">Confirm Password:</label>
-            <input type="password" id="confirm-password" name="Confirm-password" required>
+            <input class="form-control" type="password" id="confirm-password" name="Confirm-password" placeholder="Confirm password" required>
             <br>
-            <button type="submit">Sign Up</button>
+            <button class="btn-card btn btn-primary" type="submit">Sign Up</button>
         </form>
+    </div>
+</div>
     </main>
 
     <!-- Bootstrap JS -->

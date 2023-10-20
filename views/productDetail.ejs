@@ -40,7 +40,7 @@
     </header>
 <main>
     <!-- Product Details -->
-    <div class="product-details">
+    <div class="card-body text-center mx-auto" style="max-width: 400px;">
         <h2><%= productDetail.title %></h2>
         <img src="<%= productDetail.photo_url %>" alt="Image of <%= productDetail.title %>">
         <p>Model: <%= productDetail.model %></p>
@@ -48,27 +48,31 @@
         <p>Size: <%= productDetail.size %></p>
         <p>Color: <%= productDetail.color %></p>
         <p>Price: $<%= productDetail.price %></p>
-    </div>
+
 
     <% if (user && productDetail.owner_id !== user.id) { %>
-    <div>
         <!-- Favorite icon -->
         <form action="/favorites" method="POST">
             <input type="hidden" name="id" value="<%= productDetail.id %>"> 
             <div class="item">
-                <button type="submit">❤️</button> 
+                <button class="btn btn-lg" type="submit">❤️</button> 
               </div>
           </form>
           
         <!-- Message form -->
         <form action="/send-message" method="POST">
             <input type="hidden" name="receiver_id" value="<%= productDetail.owner_id %>">
-            <input type="hidden" name="product_id" value="<%= productDetail.id %>">        
-            <input type="text" name="message" placeholder="Type your message here...">
-            <button type="submit">Send message</button>
+            <input type="hidden" name="product_id" value="<%= productDetail.id %>"> 
+            <div class="form-floating">
+            <textarea class="form-control"  type="text" name="message" placeholder="Type your message here..."></textarea>
+        </div>
+            <br>       
+            <button class="btn-card btn btn-primary" type="submit">Send message</button>
         </form>
     </div>
     <%  } %>
+    
+    
 </main>
 <!-- Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

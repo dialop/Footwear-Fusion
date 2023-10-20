@@ -19,7 +19,6 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css">
     <link rel="stylesheet" href="/vendor/border-box.css">
-    <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/layout.css">
     <link rel="stylesheet" href="/styles/nav.css">
 
@@ -35,13 +34,17 @@
         <link rel="stylesheet" href="/styles/loginStyle.css">
         <link rel="stylesheet" href="/styles/nav.css">
     </header>
-<main>
-    <h1>Sign In</h1>
+<main >
+    <div class="mx-auto" style="max-width: 400px;">
+    <h1 class="text-center">Sign In</h1>
+    <div class="card-body text-center">
     <form method="POST" action="/login">
-        <input type="email" name="email" placeholder="Email" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <button type="submit">Login</button>
+        <input class="form-control mb-2" type="email" name="email" placeholder="Email" required>
+        <input class="form-control mb-2" type="password" name="password" placeholder="Password" required>
+        <button  class="btn-card btn btn-primary" type="submit">Login</button>
     </form>
+</div>
+</div>
 </main>
 <!-- Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

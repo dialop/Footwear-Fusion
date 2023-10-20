@@ -1,4 +1,5 @@
 .navbar {
+  font-family: 'Poppins', sans-serif;
   padding: 10px;
   font-size: 18px;
 }
@@ -19,4 +20,8 @@
   border: white 2px solid;
   border-radius: 10px;
   align-self: center;
+}
+
+.user-name{
+  padding: 15px;
 }

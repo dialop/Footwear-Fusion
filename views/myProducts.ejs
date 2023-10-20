@@ -28,37 +28,43 @@
     <%- include('partials/_header') %>
   </header>
 <main>
-  <h1>My Products</h1>
+  <h1 class="text-center">My Products</h1>
 
 
-  <a href="myProducts/new">Add new product</a>
+  <a class="btn btn-primary" href="myProducts/new">Add new product</a>
 
 
 
-  <div class="products">
+  <div class="card-deck">
     <% products.forEach(product=> { %>
-      <div class="product-card ">
+
+
+        <div class="card-body text-center">
         <a href="/products/<%= product.id %>">
           <img src="<%= product.photo_url %>" alt="<%= product.title %>">
         </a>
-        <p>
+        <h5 class="card-title">
           <%= product.title %>
+        </h5>
+        <p class="card-title">$<%= product.price %>
         </p>
-        <p>$<%= product.price %>
-        </p>
-        <div>
+        <div class="d-flex justify-content-center align-items-center ms-2">
           <% if (product.is_sold === true) { %>
-            <p class="sold">This product has been sold.</p>
+            <span class="sold">This product has been sold</span>
           <% } else { %>
+
             <form method="POST" action="/products/<%= product.id %>/sold">
-              <button type="submit">Mark as Sold</button>
+              <button class="btn-card btn btn-light" type="submit">Mark as Sold</button>
             </form>
-            <button><a href="/products/<%= product.id %>/edit">Edit</a></button>
+            <form method="GET" action="/products/<%= product.id %>/edit">
+              <button class="btn-card btn btn-light" type="submit">Edit</button>
+            </form>
+            
           <% } %>
         
           
           <form method="POST" action="/products/<%= product.id %>/delete">
-            <button type="submit">Delete</button>
+            <button class="btn-card btn btn-danger" type="submit">Delete</button>
           </form>
         </div>
       </div>

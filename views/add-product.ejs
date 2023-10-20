@@ -36,39 +36,42 @@
     <%- include('partials/_header') %>
   </header>
 <main>
-  <h1>Add New Product</h1>
-  <div class="add-product">
+  <div class="mx-auto" style="max-width: 400px;">
+  <h1 class="text-center">Add New Product</h1>
+  <div class="card-body text-center">
     <form action="/myProducts/new" method="POST">
-      <div>
-        <label for="title">Title</label>
-        <input type="text" name="title" placeholder="Title" required>
+      <div class="input-group">
+        <span class="input-group-text">Title</span>
+        <input class="form-control" type="text" name="title" placeholder="Title" required>
       </div>
-      <div>
-        <label for="model">Model</label>
-        <input type="text" name="model" placeholder="Model">
+      <div class="input-group">
+        <span class="input-group-text">Model</span>
+        <input class="form-control" type="text" name="model" placeholder="Model">
       </div>
-      <div>
-        <label for="description">Description</label>
-        <input type="text" name="description" placeholder="Description">
+      <div class="input-group">
+        <span class="input-group-text">Description</span>
+        <input class="form-control" type="text" name="description" placeholder="Description">
       </div>
-      <div>
-        <label for="size">Size</label>
-        <input type="number" name="size" placeholder="Size" required>
+      <div class="input-group">
+        <span class="input-group-text">Size</span>
+        <input class="form-control" type="number" name="size" placeholder="Size" required>
       </div>
-      <div>
-        <label for="color">Color</label>
-        <input type="text" name="color" placeholder="Color">
+      <div class="input-group">
+        <span class="input-group-text">Color</span>
+        <input class="form-control" type="text" name="color" placeholder="Color">
       </div>
-      <div>
-        <label for="price">Price</label>
-        <input type="number" name="price" placeholder="Price" required>
+      <div class="input-group">
+        <span class="input-group-text">Price</span>
+        <input class="form-control" type="number" name="price" placeholder="Price" required>
       </div>
-      <div>
-        <label for="photo_url">Photo_url</label>
-        <input type="text" name="photo_url" placeholder="Photo_url" required>
+      <div class="input-group">
+        <span class="input-group-text">Photo_url</span>
+        <input class="form-control" type="text" name="photo_url" placeholder="Photo_url" required>
       </div>
-      <button type="submit">Add product</button>
+      <br>
+      <button class="btn-card btn btn-primary" type="submit">Add product</button>
     </form>
+  </div>
   </div>
 </main>
 <!-- Bootstrap JS -->
