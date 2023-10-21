@@ -10,11 +10,11 @@ Footwear Fusion is a marketplace for shoe enthusiasts, operating as a simplified
 
 ## Core Features
 
-- Once registered and logged in, check out the list of all products to view the various selecion of footwear. In this page you can browse the different shoes and use the filter to view the different options available.
+- Once you have registered and logged in, navigate to the list of all products to explore our selection of footwear. On the "All Products" page, you can browse through the various shoe options and use the filter to narrow down your choices based on your preferences.
 
-- When selecting the image of interest, you can mark as favorite and send messages to the seller.
+- When you find a pair that catches your eye, click on the image to view more details. From here, you have the option to mark the item as a favorite and directly message the seller for any queries or to express interest in purchasing.
 
-- The "My Listing" page will show the sellers items. Here you can, mark as sold, edit or delete a post created by the seller. You can also add new products that will be posted for buyers to see.
+- For sellers, the "My Listings" page is your hub for managing your product listings. This page will display all the items you have put up for sale. You can mark an item as sold, edit the details of a listing, or delete a post entirely. The "Add New Product" option is also available here for when you have new footwear to offer to potential buyers.
 
 ## Screenshots
 
