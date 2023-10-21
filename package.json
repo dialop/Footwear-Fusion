@@ -19,13 +19,12 @@
     "dotenv": "^2.0.0",
     "ejs": "^2.6.2",
     "express": "^4.17.1",
-    "method-override": "^3.0.0",
     "morgan": "^1.9.1",
-    "pg": "^8.5.0",
-    "sass": "^1.35.1",
-    "twilio": "^4.19.0"
+    "pg": "^8.5.0"
+
   },
   "devDependencies": {
-    "nodemon": "^2.0.10"
+    "nodemon": "^2.0.10",
+    "sass": "^1.69.4"
   }
 }

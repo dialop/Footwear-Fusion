@@ -1,8 +1,7 @@
 body,
 html {
   margin: 0;
-  font-family: 'Poppins', sans-serif;
-}
+  font-family: 'Poppins', sans-serif; }
 
 main {
   font-family: 'Poppins', sans-serif;
@@ -11,12 +10,17 @@ main {
   justify-content: center;
   width: 90%;
   margin: auto;
-  padding-top: 50px;
-}
+  padding-top: 50px; }
 
-#background-home{
+#background-home {
   min-height: 100vh;
   background-image: url(https://images.unsplash.com/photo-1524532787116-e70228437bbe?auto=format&fit=crop&q=80&w=1469&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
   background-position: center;
   background-size: cover;
+  position: relative; }
+
+.shop-btn {
+  position: absolute;
+  top: 50%;
+  left: 20%; 
 }
