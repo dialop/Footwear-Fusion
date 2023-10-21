@@ -1,6 +1,6 @@
 # Footwear Fusion
 
-Footwear Fusion is a marketplace for shoe enthusiasts, operating as a simplified Kijiji clone where users can buy and sell various types of footwear. The full-stack app is built with server-side JavaScript (NodeJS, Express), utilizes PostgreSQL for database management, and employs jQuery and CSS preprocessors for a seamless UI/UX.
+Footwear Fusion is a marketplace for shoe enthusiasts, operating as a simplified Kijiji clone where users can buy and sell various types of footwear. The full-stack app is built with server-side JavaScript (NodeJS, Express), utilizes PostgreSQL for database management, and employs CSS preprocessors for a seamless UI/UX.
 
 ## Getting Started
 
